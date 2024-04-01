@@ -1,30 +1,36 @@
+import pickle
+from typing import List
+
+
 class Sumthing:
     name: str
-    age: int
-    subjects: list[str]
+    id: int
+    mores: List[str]
 
-    def __init__(self, name: str, age: int, subjects: list[str]) -> None:
-        self.name = name
-        self.age = age
-        self.subjects = subjects
+    def __init__(self, name, id, mores) -> None:
+        self.name, self.id, self.mores = name, id, mores
 
 
 def main():
 
-    myObj = Sumthing("Jason", 40, ["db", "architecture"])
-
-    file = open("./student.data", "wb")
-
-    file.write(myObj.encode())
+    file = open("./students.data", "wb")
+    sumthing = Sumthing("HI", 123, ["Sumethin", "is", "awesome"])
+    pickle.dump(sumthing, file)
 
     file.close()
 
-    file = open("./student.data", "rb")
+    try:
+        with open("./students.data", "rb") as file:
+            for line in file:
+                student: Sumthing
+                student = pickle.loads(line)
+                print(student)
 
-    result = file.read()
-    print(result.decode("utf-8"))
+        file.close()
+    except Exception as e:
+        print(str(e))
 
-    file.close()
+    print("Hello World")
 
 
 if __name__ == "__main__":
