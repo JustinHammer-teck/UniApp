@@ -10,10 +10,14 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in {
       devShells.x86_64-darwin.default = pkgs.mkShell {
-        nativeBuildInputs = with pkgs; [ pkgs.python3 ];
+        nativeBuildInputs = with pkgs;
+          [ python312 virtualenv nodejs ] ++ (with pkgs.python312Packages; [
+            pip
+            python312Packages.python-dotenv
+          ]);
 
         shellHook = ''
-          echo "hello to python dev shell"  
+          echo "hello to python dev shell"
         '';
 
       };

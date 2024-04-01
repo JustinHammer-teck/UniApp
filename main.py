@@ -1,9 +1,9 @@
 class Sumthing:
     name: str
     age: int
-    subjects: array[]
+    subjects: list[str]
 
-    def __init__(self, name: str, age: int, subjects: array[str]):
+    def __init__(self, name: str, age: int, subjects: list[str]) -> None:
         self.name = name
         self.age = age
         self.subjects = subjects
