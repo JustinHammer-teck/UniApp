@@ -8,7 +8,7 @@ class Student:
     password: str
     subjects: list[Subject]
 
-    def __init__(self, id: str, name: str, email: str, password: str):
+    def __init__(self, id: str, name: str, email: str, password: str) -> None:
         self.id, self.name, self.email, self.password = id, name, email, password
 
     @staticmethod

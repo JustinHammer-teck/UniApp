@@ -1,3 +1,5 @@
+import random
+
 class Subject():
     id: int
     name: str
@@ -29,5 +31,5 @@ class Subject():
         return f"Subject Id: {self.id}\nSubject Name: {self.name}"
 
     @staticmethod
-    def create_subject(id: int, name: str, mark: float):
-        return Subject(id, name, mark)
+    def create_subject(id: int, name: str):
+        return Subject(id, name, random.randint(0, 100))
