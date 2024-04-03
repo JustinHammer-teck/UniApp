@@ -1,27 +1,18 @@
 from os import system, name
-from typing import List
 
-from src.controllers import admin_controller as adminctrl
-from src.controllers import student_controller as stuctrl
-
-
-class Sumthing:
-    name: str
-    id: int
-    mores: List[str]
-
-    def __init__(self, name, id, mores) -> None:
-        self.name, self.id, self.mores = name, id, mores
-
-    def __str__(self) -> str:
-        return f"Name: {self.name} \nId: {self.id} \nMores: {self.mores}"
+from src.models.admin import Admin
+from src.models.student import Student
+from src.controllers import admin_controller as admin_ctrl
+from src.controllers import student_controller as stu_ctrl
 
 
 class UniApp:
     error_msg: str
-    
+    current_session: Student | Admin | None
+
     def __init__(self) -> None:
         self.error_msg = ""
+        self.current_session = None
 
     def main(self):
         while True:
@@ -38,8 +29,9 @@ class UniApp:
 
             match userchoice:
                 case 1:
-                    (is_auth, msg) = stuctrl.StudentController().login()
-                    if is_auth:
+                    (student, msg) = stu_ctrl.StudentController().login()
+                    if msg:
+                        self.current_session = student
                         self.student_menu()
                         self.error_msg = ""
                     else:
@@ -47,6 +39,8 @@ class UniApp:
                 case 2:
                     self.admin_menu()
                 case 3:
+                    stu_ctrl.StudentController().register()
+                case 4:
                     break
 
     def admin_menu(self):
@@ -79,28 +73,20 @@ class UniApp:
         else:
             _ = system('clear')
  
-    # sys = Sys()
-    # for i in range(1, 15):
-    #     sys.add(Sumthing("HI", i, ["Sumethin", "is", "awesome"]))
-    #
-    # file = open("./students.data", "wb")
-    #
-    # pickle.dump(sys, file)
-    #
-    # file.close()
-    #
-    # try:
-    #     newsys = Sys()
-    #     with open("./students.data", "rb") as file:
-    #         newsys = pickle.load(file)
-    #
-    #     file.close()
-    #     for i in newsys.value:
-    #         print(i.__str__())
-    #
-    # except Exception as e:
-    #     print(str(e))
-
 
 if __name__ == "__main__":
     UniApp().main()
+    # students : List[Student] = []
+    #
+    # for i in range(1 ,10):
+    #     students.append(Student(i.__str__(), f"halo{i}", f"halo{i}@", "123"))
+    #
+    # db = db.Database()
+    # db.context = students
+    #
+    # db.save()
+    #
+    # data = db.read()
+    #
+    # for i in data:
+    #     print(i.__str__())

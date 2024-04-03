@@ -3,14 +3,15 @@ import pickle
 from typing import List
 
 from ..common.singleton import SingletonMeta
-from .student import Student
+from ..models.student import Student
 
 
 class Database(metaclass=SingletonMeta):
     DB_PATH: str = os.path.dirname(__file__) + "/students.data"
-    context: List[Student] = []
+    context: List[Student]
 
     def __init__(self) -> None:
+        self.context = []
         self.__load()
 
     def __load(self):

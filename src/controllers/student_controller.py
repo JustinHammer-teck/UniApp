@@ -1,4 +1,5 @@
 import re
+from typing import List, Tuple
 from ..models import student, db
 from ..views import student_view as studentv
 
@@ -12,30 +13,50 @@ class StudentController:
             db.Database(),
         )
 
-    def login(self):
+    def login(self) -> Tuple[student.Student | None, str]:
         (username, password) = self.view.login()
 
         email_pattern = r"^[a-zA-Z]+\.+[a-zA-Z]+@university\.com$"
         password_pattern = r"^[A-Z][A-Za-z]{4,}\d{3,}$"
 
         if re.match(email_pattern, username) and re.match(password_pattern, password):
-            return (True, "")
+            students: List[student.Student] = self.__is_registed_user(
+                username, password
+            )
+
+            if students:
+                return (students[0], "")
+            else:
+                return (None, "Invalid Username or Password, please try again")
         else:
-            # print("Invalid Username or Password, please try again")
-            return (False, "Invalid Username or Password, please try again")
+            return (None, "Invalid Username or Password, please try again")
 
     def register(self):
-        (username, password) = self.view.login()
+        (username, password) = self.view.register()
 
         email_pattern = r"^[a-zA-Z]+\.+[a-zA-Z]+@university\.com$"
         password_pattern = r"^[A-Z][A-Za-z]{4,}\d{3,}$"
 
-        if re.match(email_pattern, username) and re.match(password_pattern, password):
-            ## TODO: add new user to db
+        if self.__is_exited_user(username):
+            return (False, "user already exist")
+        elif re.match(email_pattern, username) and re.match(password_pattern, password):
             return (True, "")
         else:
-            # print("Invalid Username or Password, please try again")
             return (False, "Invalid Username or Password, please try again")
 
-    def enrol_subject(self):
-        pass
+    def __is_exited_user(self, username: str) -> bool:
+        students: List[student.Student] = self.db.read()
+
+        return [
+            student for student in students if student.email.lower() == username.lower()
+        ][0] is not None
+
+    def __is_registed_user(self, username: str, password: str) -> List[student.Student]:
+        students: List[student.Student] = self.db.read()
+
+        return [
+            student
+            for student in students
+            if student.email.lower() == username.lower()
+            and student.password.lower() == password.lower()
+        ]

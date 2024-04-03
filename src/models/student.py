@@ -12,6 +12,9 @@ class Student:
     def __init__(self, id: str, name: str, email: str, password: str) -> None:
         self.id, self.name, self.email, self.password = id, name, email, password
 
+    def __str__(self) -> str:
+        return f"Id: {self.id} - Name {self.name} - Email {self.email}"
+
     @staticmethod
     def create_student(id: str, name: str, email: str, password: str) -> Student:
         return Student(id, name, email, password)

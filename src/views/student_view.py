@@ -1,6 +1,6 @@
 from getpass import getpass
 from typing import List
-from models.student import Student
+from ..models.student import Student
 
 
 class StudentView:
@@ -12,5 +12,11 @@ class StudentView:
 
         return (username, password)
 
-    def view_enrolment(self, enrolment: List[Student]):
+    def register(self):
+        username = input("your email: ")
+        password = getpass("your password: ")
+
+        return (username, password)
+
+    def view_enrolment(self, user_id):
         pass
