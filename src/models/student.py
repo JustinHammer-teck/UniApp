@@ -25,11 +25,11 @@ class Student:
         return self.__is_exceeded_enrolment()
 
     def enrol_subject(self, subject: Subject):
-        if self.__is_exceeded_enrolment():
+        if not self.__is_exceeded_enrolment():
             self.enrolments.append(subject)
 
     def delete_subject(self, subjectId: int):
         self.enrolments
 
     def __is_exceeded_enrolment(self) -> bool:
-        return len(self.enrolments) <= 4
+        return len(self.enrolments) >= 4

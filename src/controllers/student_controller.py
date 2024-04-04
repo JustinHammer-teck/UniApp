@@ -24,11 +24,9 @@ class StudentController:
         if not self.__is_valid_login_session(username, password):
             return (None, "Invalid Username or Password, please try again")
 
-        students: List[Student] = db.Database().read()
-
         selected_student = [
             student
-            for student in students
+            for student in self.db.context
             if student.email.lower() == username.lower()
             and student.password.lower() == password.lower()
         ]

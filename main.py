@@ -14,13 +14,11 @@ class UniApp:
     def __init__(self) -> None:
         self.error_msg = ""
         self.student_session = None
+        self.menu = None
 
     def main(self):
         while True:
             self.clear()
-            if self.error_msg:
-                print(self.error_msg)
-
             print("1. Login Student")
             print("2. Login Admin")
             print("3. Register")
@@ -28,13 +26,20 @@ class UniApp:
 
             userchoice = int(input("choose: "))
 
+            if self.error_msg:
+                print(self.error_msg)
+
+            if self.student_session:
+                print(f"Hello \n{self.student_session.__str__()}")
+
             match userchoice:
                 case 1:
                     (student, msg) = stu_ctrl.StudentController().login()
-                    if msg:
+                    if not msg:
                         self.student_session = student
-                        self.student_menu()
                         self.error_msg = ""
+
+                        self.student_menu()
                     else:
                         self.error_msg = msg
                 case 2:
@@ -56,7 +61,7 @@ class UniApp:
             print("2. Remove Subject")
             print("3. View My Enrolment")
             print("4. Change Password")
-            print("Exit")
+            print("5. Exit")
             userchoice = int(input("choose: "))
 
             if self.student_session is None:
