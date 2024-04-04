@@ -21,15 +21,15 @@ class Subject():
 
     def __init__(self, id: int, name: str, mark: float) -> None:
         self.id = id
-        self.name = name 
+        self.name = name
         self.mark = mark
 
     def is_passed(self) -> bool:
         return self.mark < 50
 
     def __str__(self) -> str:
-        return f"Subject Id: {self.id}\nSubject Name: {self.name}"
+        return f"Subject Id: {self.id}\nSubject Name: {self.name}\nMark: {self.mark}\nGrade: {self.grade}"
 
     @staticmethod
-    def create_subject(id: int, name: str):
-        return Subject(id, name, random.randint(0, 100))
+    def create_subject(id: int, name: str, mark: float):
+        return Subject(id, name, mark)

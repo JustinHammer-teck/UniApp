@@ -1,4 +1,4 @@
-from ..models.db import Database
+from ..persistent.db import Database
 from ..views.admin_view import AdminView
 
 
@@ -8,7 +8,5 @@ class AdminController:
         self.db = Database()
         self.view = AdminView()
 
-        self.__load_student()
-
-    def __load_student(self):
-        self.db.read()
+    def clear_database(self):
+        self.db.clear()

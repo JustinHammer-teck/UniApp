@@ -18,17 +18,40 @@ class Database(metaclass=SingletonMeta):
         self.read()
 
     def read(self) -> List[Student]:
-        if self.__file_exited():
-            with open(self.DB_PATH, "rb") as file:
-                self.context = pickle.load(file)
+        try:
+            if self.__file_exited():
+                with open(self.DB_PATH, "rb") as file:
+                    if file.read(1):
+                        file.seek(0)
+                        self.context = pickle.load(file)
+                    else:
+                        self.context = []
+        except Exception as e:
+            raise e
+
         return self.context
 
     def save(self):
         try:
+            self.context.sort(key=lambda stu: stu.id)
+
             with open(self.DB_PATH, "wb") as file:
                 pickle.dump(self.context, file)
+
         except Exception as e:
-            print(str(e))
+            raise e
+        finally:
+            self.__load()
+
+    def clear(self):
+        if self.__file_exited():
+            try:
+                with open(self.DB_PATH, "w") as file:
+                    pass
+
+                self.context = []
+            except Exception as e:
+                raise e
 
     def __file_exited(self) -> bool:
         if not os.path.exists(self.DB_PATH):

@@ -1,6 +1,7 @@
 from getpass import getpass
-from typing import List
+
 from ..models.student import Student
+from ..models.subject import Subject
 
 
 class StudentView:
@@ -18,5 +19,14 @@ class StudentView:
 
         return (username, password)
 
-    def view_enrolment(self, user_id):
+    def change_password(self):
+        pass
+
+    def enrol_subject(self, subject: Subject):
+        pass
+
+    def view_enrolment(self):
+        pass
+
+    def remove_subject(self, student: Student):
         pass

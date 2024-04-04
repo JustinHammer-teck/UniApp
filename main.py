@@ -1,5 +1,6 @@
 from os import system, name
 
+from src.persistent.db import Database
 from src.models.admin import Admin
 from src.models.student import Student
 from src.controllers import admin_controller as admin_ctrl
@@ -8,11 +9,11 @@ from src.controllers import student_controller as stu_ctrl
 
 class UniApp:
     error_msg: str
-    current_session: Student | Admin | None
+    student_session: Student | None
 
     def __init__(self) -> None:
         self.error_msg = ""
-        self.current_session = None
+        self.student_session = None
 
     def main(self):
         while True:
@@ -31,7 +32,7 @@ class UniApp:
                 case 1:
                     (student, msg) = stu_ctrl.StudentController().login()
                     if msg:
-                        self.current_session = student
+                        self.student_session = student
                         self.student_menu()
                         self.error_msg = ""
                     else:
@@ -46,47 +47,35 @@ class UniApp:
     def admin_menu(self):
         while True:
             self.clear()
-            print("1. Add Student")
-            print("2. Do something in admin")
             print("3. Exit")
 
     def student_menu(self):
         while True:
             self.clear()
-            print("1. Get enrolment list")
-            print("2. Enrol subject")
-            print("2. Enrol subject")
-            print("2. Enrol subject")
+            print("1. Enrol New Subject")
+            print("2. Remove Subject")
+            print("3. View My Enrolment")
+            print("4. Change Password")
+            print("Exit")
             userchoice = int(input("choose: "))
+
+            if self.student_session is None:
+                break
+
             match userchoice:
                 case 1:
-                    print("Awesome")
-    
+                    stu_ctrl.StudentController().enrol_subject(self.student_session)
+                case 2:
+                    stu_ctrl.StudentController().remove_subject(self.student_session)
+
     @staticmethod
     def clear():
- 
         # for windows
         if name == 'nt':
             _ = system('cls')
-    
         # for mac and linux(here, os.name is 'posix')
         else:
             _ = system('clear')
- 
 
 if __name__ == "__main__":
     UniApp().main()
-    # students : List[Student] = []
-    #
-    # for i in range(1 ,10):
-    #     students.append(Student(i.__str__(), f"halo{i}", f"halo{i}@", "123"))
-    #
-    # db = db.Database()
-    # db.context = students
-    #
-    # db.save()
-    #
-    # data = db.read()
-    #
-    # for i in data:
-    #     print(i.__str__())
