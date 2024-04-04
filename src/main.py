@@ -1,10 +1,9 @@
 from os import system, name
 
-from src.persistent.db import Database
-from src.models.admin import Admin
-from src.models.student import Student
-from src.controllers import admin_controller as admin_ctrl
-from src.controllers import student_controller as stu_ctrl
+from models.admin import Admin
+from models.student import Student
+from controllers import admin_controller as admin_ctrl
+from controllers import student_controller as stu_ctrl
 
 
 class UniApp:

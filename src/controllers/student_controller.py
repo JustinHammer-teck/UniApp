@@ -2,10 +2,10 @@ import random
 import re
 from typing import List, Tuple
 
-from ..persistent import db
-from ..models.student import Student
-from ..models.subject import Subject
-from ..views import student_view as studentv
+from persistent import db
+from models.student import Student
+from models.subject import Subject
+from views import student_view as studentv
 
 
 class StudentController:
@@ -19,15 +19,15 @@ class StudentController:
         )
 
     def login(self) -> Tuple[Student | None, str]:
-        (username, password) = self.view.login()
+        (email, password) = self.view.login()
 
-        if not self.__is_valid_login_session(username, password):
+        if not self.__is_valid_login_session(email, password):
             return (None, "Invalid Username or Password, please try again")
 
         selected_student = [
             student
             for student in self.db.context
-            if student.email.lower() == username.lower()
+            if student.email.lower() == email.lower()
             and student.password.lower() == password.lower()
         ]
 
@@ -37,14 +37,20 @@ class StudentController:
         return (selected_student[0], "")
 
     def register(self):
-        (username, password) = self.view.register()
+        (username, email, password) = self.view.register()
 
         if self.__is_exited_user(username):
-            return (False, "user already exist")
-        elif self.__is_valid_login_session(username, password):
-            return (True, "")
+            return "User already exist, please try again"
+        elif self.__validate_email(email) and self.__validate_password(password):
+            new_student: Student = Student.create_student(username, email, password)
+
+            self.db.context.append(new_student)
+
+            self.db.save()
+
+            return "Successfully Create User"
         else:
-            return (False, "Invalid Username or Password, please try again")
+            return "Invalid Username or Password, please try again"
 
     def change_password(self, ctx: Student):
         pass
@@ -74,7 +80,11 @@ class StudentController:
         pass
 
     def __is_valid_login_session(self, email, password):
-        return self.__validate_email(email) and self.__validate_password(password)
+        return (
+            self.__validate_email(email)
+            and self.__validate_password(password)
+            and self.__is_registed_user(email, password)
+        )
 
     def __validate_password(self, password: str):
         return re.match(self.PASSWORD_PATTERN, password)
