@@ -1,5 +1,3 @@
-import random
-
 class Subject():
     id: int
     name: str

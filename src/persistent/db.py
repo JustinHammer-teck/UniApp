@@ -2,8 +2,8 @@ import os
 import pickle
 from typing import List
 
-from ..common.singleton import SingletonMeta
-from ..models.student import Student
+from common.singleton import SingletonMeta
+from models.student import Student
 
 
 class Database(metaclass=SingletonMeta):

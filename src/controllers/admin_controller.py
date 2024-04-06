@@ -1,5 +1,5 @@
-from ..persistent.db import Database
-from ..views.admin_view import AdminView
+from persistent.db import Database
+from views.admin_view import AdminView
 
 
 class AdminController:
