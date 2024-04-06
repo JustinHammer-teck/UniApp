@@ -34,7 +34,7 @@ class StudentController:
         if not selected_student:
             return (None, "Invalid Username or Password, please try again")
 
-        return (selected_student[0], "")
+        return (selected_student[0], "Login Successfully")
 
     def register(self):
         (username, email, password) = self.view.register()
@@ -69,6 +69,7 @@ class StudentController:
         entity.enrol_subject(new_subject)
 
         self.db.save()
+        self.view.enroll_subject(new_subject.__str__())
 
     def view_enrolment(self, ctx: Student):
         pass

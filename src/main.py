@@ -4,8 +4,6 @@ from models.admin import Admin
 from models.student import Student
 from controllers import admin_controller as admin_ctrl
 from controllers import student_controller as stu_ctrl
-
-
 class UniApp:
     error_msg: str
     student_session: Student | None
@@ -59,8 +57,10 @@ class UniApp:
             print("1. Enrol New Subject")
             print("2. Remove Subject")
             print("3. View My Enrolment")
-            print("4. Change Password")
-            print("5. Exit")
+            print("4. Subject Result")
+            print("5. Session Result")
+            print("6. Change Password")
+            print("7. Exit")
             userchoice = int(input("choose: "))
 
             if self.student_session is None:
@@ -71,6 +71,10 @@ class UniApp:
                     stu_ctrl.StudentController().enrol_subject(self.student_session)
                 case 2:
                     stu_ctrl.StudentController().remove_subject(self.student_session)
+                case 7:
+                    self.error_msg = ""
+                    self.student_session = None
+                    break
 
     @staticmethod
     def clear():

@@ -28,11 +28,11 @@ class StudentView:
     def change_password(self):
         pass
 
-    def enrol_subject(self, subject: Subject):
-        pass
+    def enroll_subject(self, subject: str):
+        print(subject)
 
     def view_enrolment(self):
         pass
 
-    def remove_subject(self, student: Student):
+    def remove_subject(self):
         pass
