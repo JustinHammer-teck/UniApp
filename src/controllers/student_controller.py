@@ -65,10 +65,7 @@ class StudentController:
         entity.enrol_subject(new_subject)
 
         self.db.save()
-<<<<<<< HEAD
-=======
         self.view.enrol_subject(new_subject)
->>>>>>> be6b92d (UniApp: finished implement for menu control flow)
 
     def view_enrolment(self, ctx: Student):
         students = [st for st in self.db.read() if st.id == ctx.id]
