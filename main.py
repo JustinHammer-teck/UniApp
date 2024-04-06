@@ -27,9 +27,6 @@ class UniApp:
     def default_menu(self):
         while True:
             self.clear()
-            if self.error_msg:
-                print(self.error_msg)
-
             print("1. Login Student")
             print("2. Login Admin")
             print("3. Register")
@@ -38,6 +35,12 @@ class UniApp:
 
             userchoice = int(input("choose: "))
  
+
+            if self.error_msg:
+                print(self.error_msg)
+
+            if self.student_session:
+                print(f"Hello \n{self.student_session.__str__()}")
 
             match userchoice:
                 case 1:

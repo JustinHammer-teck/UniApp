@@ -34,4 +34,5 @@ class Student:
         self.enrolments
 
     def __is_exceeded_enrolment(self) -> bool:
-        return len(self.enrolments) => 4
+        return len(self.enrolments) >= 4
+
