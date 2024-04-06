@@ -26,7 +26,13 @@ class Student:
 
     def enrol_subject(self, subject: Subject):
         if self.__is_exceeded_enrolment():
+<<<<<<< HEAD
             self.enrolments.append(subject)
+=======
+            self.enrolment.append(subject)
+        else:
+            print("Student Exceeded Subject Enrolment Capacity")
+>>>>>>> be6b92d (UniApp: finished implement for menu control flow)
 
     def delete_subject(self, subjectId: int):
         self.enrolments

@@ -59,15 +59,24 @@ class StudentController:
         students = [st for st in self.db.context if st.id == ctx.id]
 
         if not students:
-            raise Exception()
+            raise Exception(f"Could not find student with id {ctx.id}")
 
         entity: Student = students[0]
         entity.enrol_subject(new_subject)
 
         self.db.save()
+<<<<<<< HEAD
+=======
+        self.view.enrol_subject(new_subject)
+>>>>>>> be6b92d (UniApp: finished implement for menu control flow)
 
     def view_enrolment(self, ctx: Student):
-        pass
+        students = [st for st in self.db.read() if st.id == ctx.id]
+
+        if not students:
+            raise Exception(f"Could not find student with id {ctx.id}")
+
+        self.view.view_enrolment(students[0])
 
     def get_subject_info(self, ctx: Student):
         pass
