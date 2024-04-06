@@ -28,6 +28,8 @@ class Student:
     def enrol_subject(self, subject: Subject):
         if self.__is_exceeded_enrolment():
             self.enrolment.append(subject)
+        else:
+            print("Student Exceeded Subject Enrolment Capacity")
 
     def delete_subject(self, subjectId: int):
         self.enrolment
