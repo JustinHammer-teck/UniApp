@@ -1,2 +1,2 @@
 class Admin:
-    name: str
+    name: str = "Admin"

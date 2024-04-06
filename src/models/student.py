@@ -26,10 +26,13 @@ class Student:
 
     def enrol_subject(self, subject: Subject):
         if not self.__is_exceeded_enrolment():
-            self.enrolments.append(subject)
+            self.enrolment.append(subject)
+        else:
+            print("Student Exceeded Subject Enrolment Capacity")
 
     def delete_subject(self, subjectId: int):
         self.enrolments
 
     def __is_exceeded_enrolment(self) -> bool:
         return len(self.enrolments) >= 4
+
