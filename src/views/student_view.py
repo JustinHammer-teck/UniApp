@@ -23,11 +23,7 @@ class StudentView:
         pass
 
     def enrol_subject(self, subject: Subject):
-<<<<<<< HEAD
-        pass
-=======
         print(subject.__str__())
->>>>>>> be6b92d (UniApp: finished implement for menu control flow)
 
     def view_enrolment(self, student: Student):
         if student.enrolment:
