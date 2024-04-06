@@ -63,7 +63,7 @@ class StudentController:
         students = [st for st in self.db.context if st.id == ctx.id]
 
         if not students:
-            raise Exception(f"Could not find student with id {ctx.id}")
+            raise Exception(f"Could not find student with id {ctx.id}"f"Could not find student with id {ctx.id}")
 
         entity: Student = students[0]
         entity.enrol_subject(new_subject)

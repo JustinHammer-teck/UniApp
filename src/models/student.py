@@ -26,7 +26,7 @@ class Student:
         return self.__is_exceeded_enrolment()
 
     def enrol_subject(self, subject: Subject):
-        if self.__is_exceeded_enrolment():
+        if not self.__is_exceeded_enrolment():
             self.enrolment.append(subject)
         else:
             print("Student Exceeded Subject Enrolment Capacity")
