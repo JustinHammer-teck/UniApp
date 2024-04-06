@@ -39,11 +39,8 @@ class UniApp:
             match userchoice:
                 case 1:
                     (student, msg) = stu_ctrl.StudentController().login()
-                    if not msg:
-                        self.session = student
-                        self.notifications = ""
-                    else:
-                        self.notifications = msg
+                    self.session = student
+                    self.notifications = msg
                     break
                 case 2:
                     self.session = Admin()
@@ -75,7 +72,8 @@ class UniApp:
 
     def student_menu(self):
         while True:
-            if self.session is not Student:
+
+            if type(self.session) is not Student:
                 break
 
             self.clear()
@@ -90,7 +88,7 @@ class UniApp:
             self.__notify_if_any()
 
             if self.session:
-                print(f"Hello \n{self.session.__str__()}")
+                print(f"Hello :{self.session.__str__()}")
 
             userchoice = int(input("choose: "))
 
@@ -104,6 +102,10 @@ class UniApp:
                 case 7:
                     self.__logout()
                     break
+                case 8:
+                    self.exit()
+                    break
+
 
     def __logout(self):
         self.notifications = ""

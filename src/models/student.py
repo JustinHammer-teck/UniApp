@@ -1,6 +1,7 @@
 from __future__ import annotations
-from typing import List
 
+import random
+from typing import List
 from models.subject import Subject
 
 
@@ -12,11 +13,12 @@ class Student:
     enrolment: List[Subject]
 
     def __init__(self, name: str, email: str, password: str) -> None:
+        self.id = str(random.randint(1, 100000))
         self.name, self.email, self.password = name, email, password
         self.enrolment = []
 
     def __str__(self) -> str:
-        return f"Id: {self.id} - Name {self.name} - Email {self.email} - Fully Enrol: {self.is_fully_enrol()}"
+        return f"Student name: {self.name}\nEmail: {self.email}"
 
     @staticmethod
     def create_student(name: str, email: str, password: str) -> Student:

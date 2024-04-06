@@ -33,8 +33,6 @@ class Database(metaclass=SingletonMeta):
 
     def save(self):
         try:
-            self.context.sort(key=lambda stu: stu.id)
-
             with open(self.DB_PATH, "wb") as file:
                 pickle.dump(self.context, file)
 

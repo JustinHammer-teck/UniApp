@@ -37,9 +37,12 @@ class StudentController:
         return (selected_student[0], "Login Successfully")
 
     def register(self):
-        (username, email, password) = self.view.register()
+        (username, email, password, confirmpassword) = self.view.register()
 
-        if self.__is_exited_user(username):
+        if not password == confirmpassword:
+            return "Your confim password is not identical with your password"
+
+        if self.__is_exited_user(email):
             return "User already exist, please try again"
         elif self.__validate_email(email) and self.__validate_password(password):
             new_student: Student = Student.create_student(username, email, password)
@@ -58,12 +61,15 @@ class StudentController:
     def enrol_subject(self, ctx: Student):
 
         new_subject: Subject = Subject.create_subject(
-            1, "Subject 1", random.randint(45, 100)
+            random.randint(1, 1000), "Subject 1", random.randint(45, 100)
         )
         students = [st for st in self.db.context if st.id == ctx.id]
 
         if not students:
-            raise Exception(f"Could not find student with id {ctx.id}"f"Could not find student with id {ctx.id}")
+            raise Exception(
+                f"Could not find student with id {ctx.id}"
+                f"Could not find student with id {ctx.id}"
+            )
 
         entity: Student = students[0]
         entity.enrol_subject(new_subject)
@@ -98,12 +104,17 @@ class StudentController:
     def __validate_email(self, email: str):
         return re.match(self.EMAIL_PATTERN, email)
 
-    def __is_exited_user(self, username: str) -> bool:
-        students: List[Student] = self.db.read()
-
-        return [
-            student for student in students if student.email.lower() == username.lower()
-        ][0] is not None
+    def __is_exited_user(self, email: str) -> bool:
+        return (
+            len(
+                [
+                    student
+                    for student in self.db.read()
+                    if student.email.lower() == email.lower()
+                ]
+            )
+            > 0
+        )
 
     def __is_registed_user(self, username: str, password: str) -> List[Student]:
         students: List[Student] = self.db.read()

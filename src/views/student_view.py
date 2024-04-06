@@ -22,8 +22,9 @@ class StudentView:
             "password should [start] with uppercase character, [minumum] 5 letters, followed by [3] or more digit"
         )
         password = getpass("your password: ")
+        confirmpassword = getpass("confirm your password: ")
 
-        return (username, email, password)
+        return (username, email, password, confirmpassword)
 
     def change_password(self):
         pass
