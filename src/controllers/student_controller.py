@@ -19,29 +19,20 @@ class StudentController:
             db.Database(),
         )
 
-    def login(self) -> Student:
+    def login(self) -> Student | None:
 
         result: Student | None = None
 
         while type(result) is not Student:
             (email, password) = self.view.login()
 
-            if not self.__is_valid_login_session(email, password):
-                Color.prRed("Invalid Email or Password pattern, please try again")
-            else:
-                selected_student = [
-                    student
-                    for student in self.db.read()
-                    if student.email.lower() == email.lower()
-                    and student.password.lower() == password.lower()
-                ]
+            selected_student = self.__is_registed_user(email, password)
 
-                if not selected_student:
-                    Color.prRed("Invalid Username or Password, please try again")
+            if not selected_student:
+                Color.prRed(f"Wrong Email or Password, please try again")
+                return
 
-                result = selected_student[0]
-
-        return result
+            return selected_student[0]
 
     def register(self):
 
@@ -108,13 +99,6 @@ class StudentController:
 
     def remove_subject(self, ctx: Student):
         pass
-
-    def __is_valid_login_session(self, email, password):
-        return (
-            self.__validate_email(email)
-            and self.__validate_password(password)
-            and self.__is_registed_user(email, password)
-        )
 
     def __validate_password(self, password: str):
         return re.match(self.PASSWORD_PATTERN, password)

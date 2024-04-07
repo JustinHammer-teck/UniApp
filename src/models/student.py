@@ -20,7 +20,7 @@ class Student:
         self.enrolment = []
 
     def __str__(self) -> str:
-        return f"Student name: {self.name}\nEmail: {self.email}"
+        return f"{self.name} :: {self.id} --> Email: {self.email}"
 
     @staticmethod
     def create_student(name: str, email: str, password: str) -> Student:

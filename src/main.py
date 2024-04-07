@@ -28,7 +28,8 @@ class UniApp:
             Color.prCyan("1. [L]ogin [S]tudent")
             Color.prCyan("2. [L]ogin [A]dmin")
             Color.prCyan("3. [R]egister")
-            Color.prCyan("4. [E]xit")
+            Color.prCyan("4. [C]lear")
+            Color.prCyan("5. [E]xit")
             Color.prCyan("==========================")
 
             userchoice = input("User can choose either [Number] or the [First Letter]: ")
@@ -43,7 +44,10 @@ class UniApp:
                 case "3" | "r":
                     stu_ctrl.StudentController().register()
                     break
-                case "4" | "e":
+                case "4" | "c":
+                    self.clear()
+                case "5" | "e":
+                    Color.prYellow("Exit")
                     self.exit()
                     break
 
@@ -53,28 +57,32 @@ class UniApp:
             Color.prCyan("2. [G]roup Students")
             Color.prCyan("3. [P]artition Students")
             Color.prCyan("4. [R]emove Student")
-            Color.prCyan("5. [C]lear File")
-            Color.prCyan("6. [L]ogout")
-            Color.prCyan("7. [Q]uit")
+            Color.prCyan("5. [C]lear [D]ata")
+            Color.prCyan("6. [C]lear")
+            Color.prCyan("7. [L]ogout")
+            Color.prCyan("8. [Q]uit")
             Color.prCyan("==========================")
 
             userchoice = input("User can choose either [Number] or the [First Letter]: ")
 
             match userchoice.lower():
                 case "1" | "v":
-                    pass
+                    admin_ctrl.AdminController().view_students()
                 case "2" | "g":
                     pass
                 case "3" | "p":
                     pass
                 case "4" | "r":
                     pass
-                case "5" | "c":
-                    pass
-                case "6" | "l":
+                case "5" | "cd":
+                    admin_ctrl.AdminController().clear_database()
+                case "6" | "c":
+                    self.clear()
+                case "7" | "l":
                     self.__logout()
                     break
-                case "7" | "q":
+                case "8" | "q":
+                    Color.prYellow("Exit")
                     self.exit()
                     break
 
@@ -89,9 +97,10 @@ class UniApp:
             Color.prCyan("3. [V]iew My Enrolment")
             Color.prCyan("4. [S]ubject Result")
             Color.prCyan("5. [Se]ssion Result")
-            Color.prCyan("6. [C]hange Password")
-            Color.prCyan("7. [L]ogout")
-            Color.prCyan("8. [Q]uit")            
+            Color.prCyan("6. [C]hange [P]assword")
+            Color.prCyan("7. [C]lear")
+            Color.prCyan("8. [L]ogout")
+            Color.prCyan("9. [Q]uit")            
             Color.prCyan("==========================")
 
             if self.session:
@@ -110,12 +119,15 @@ class UniApp:
                     pass
                 case "5" | "se":
                     pass
-                case "6" | "c":
+                case "6" | "cp":
                     pass
-                case "7" | "l":
+                case "7" | "c":
+                    self.clear()
+                case "8" | "l":
                     self.__logout()
                     break
-                case "8" | "q":
+                case "9" | "q":
+                    Color.prYellow("Exit")
                     self.exit()
                     break
 
@@ -138,92 +150,3 @@ class UniApp:
 
 if __name__ == "__main__":
     UniApp().main()
-
-# import os
-# import platform
-#
-# # Global variables
-# current_menu = 'main'
-# messages = []  # A list to hold messages to be displayed
-#
-# def clear_screen():
-#     """Clears the console screen."""
-#     if platform.system() == "Windows":
-#         os.system('cls')
-#     else:
-#         os.system('clear')
-#
-# def add_message(message):
-#     """Adds a message to the messages list."""
-#     global messages
-#     messages.append(message)
-#
-# def display():
-#     """Handles the display update, showing messages and the current menu."""
-#     clear_screen()
-#     for message in messages:
-#         print(message)
-#     messages.clear()  # Clear messages after displaying
-#
-#     if current_menu == 'main':
-#         show_main_menu()
-#     elif current_menu == 'submenu':
-#         show_submenu()
-#
-# def view_predefined_context():
-#     add_message("\nHello World")
-#
-# def input_and_print():
-#     user_input = input("\nEnter something: ")
-#     add_message(f"You entered: {user_input}")
-#
-# def show_main_menu():
-#     print("\nMain Menu:")
-#     print("1. View predefined context")
-#     print("2. Input something and print it")
-#     print("3. Open sub-menu example")
-#     print("4. Exit")
-#
-# def show_submenu():
-#     print("\nSub-Menu:")
-#     print("1. Say Hello")
-#     print("2. Say Goodbye")
-#     print("3. Return to main menu")
-#
-# def handle_submenu_choice(choice):
-#     global current_menu
-#     if choice == '1':
-#         add_message("\nHello from the sub-menu!")
-#     elif choice == '2':
-#         add_message("\nGoodbye from the sub-menu!")
-#     elif choice == '3':
-#         current_menu = 'main'
-#     else:
-#         add_message("Invalid option, please try again.")
-#
-# def main():
-#     global current_menu
-#
-#     while True:
-#         display()  # Update display at the start of each loop
-#
-#         choice = input("Choose an option: ")
-#
-#         if current_menu == 'main':
-#             if choice == '1':
-#                 view_predefined_context()
-#             elif choice == '2':
-#                 input_and_print()
-#             elif choice == '3':
-#                 current_menu = 'submenu'
-#             elif choice == '4':
-#                 add_message("Exiting...")
-#                 display()  # Final display update to show exit message
-#                 break
-#             else:
-#                 add_message("Invalid option, please try again.")
-#         elif current_menu == 'submenu':
-#             handle_submenu_choice(choice)
-#
-# if __name__ == "__main__":
-#     main()
