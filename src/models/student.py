@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import random
 from typing import List
+
+from common.color import Color
 from models.subject import Subject
 
 
@@ -30,8 +32,10 @@ class Student:
     def enrol_subject(self, subject: Subject):
         if not self.__is_exceeded_enrolment():
             self.enrolment.append(subject)
-        else:
-            print("Student Exceeded Subject Enrolment Capacity")
+            return True
+
+        Color.prRed("Student Exceeded Subject Enrolment Capacity")
+        return False
 
     def delete_subject(self, subjectId: int):
         self.enrolment

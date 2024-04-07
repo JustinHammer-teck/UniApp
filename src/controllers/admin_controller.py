@@ -22,3 +22,4 @@ class AdminController:
 
     def clear_database(self):
         self.db.clear()
+        self.view.clear_database()
