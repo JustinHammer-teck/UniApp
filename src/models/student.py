@@ -1,6 +1,9 @@
 from __future__ import annotations
+
+import random
 from typing import List
 
+from common.color import Color
 from models.subject import Subject
 
 
@@ -12,11 +15,12 @@ class Student:
     enrolment: List[Subject]
 
     def __init__(self, name: str, email: str, password: str) -> None:
+        self.id = str(random.randint(1, 100000))
         self.name, self.email, self.password = name, email, password
         self.enrolment = []
 
     def __str__(self) -> str:
-        return f"Id: {self.id} - Name {self.name} - Email {self.email} - Fully Enrol: {self.is_fully_enrol()}"
+        return f"{self.name} :: {self.id} --> Email: {self.email}"
 
     @staticmethod
     def create_student(name: str, email: str, password: str) -> Student:
@@ -28,8 +32,10 @@ class Student:
     def enrol_subject(self, subject: Subject):
         if not self.__is_exceeded_enrolment():
             self.enrolment.append(subject)
-        else:
-            print("Student Exceeded Subject Enrolment Capacity")
+            return True
+
+        Color.prRed("Student Exceeded Subject Enrolment Capacity")
+        return False
 
     def delete_subject(self, subjectId: int):
         self.enrolment

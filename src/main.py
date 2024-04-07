@@ -1,6 +1,7 @@
 from os import system, name
 import sys
 
+from common.color import Color
 from models.admin import Admin
 from models.student import Student
 from controllers import admin_controller as admin_ctrl
@@ -8,13 +9,10 @@ from controllers import student_controller as stu_ctrl
 
 
 class UniApp:
-    notifications: str
     session: Student | Admin | None
 
     def __init__(self) -> None:
-        self.notifications = ""
         self.session = None
-        self.menu = None
 
     def main(self):
         while True:
@@ -22,100 +20,120 @@ class UniApp:
                 self.admin_menu()
             elif type(self.session) is Student:
                 self.student_menu()
-            else: 
+            else:
                 self.default_menu()
 
     def default_menu(self):
         while True:
-            self.clear()
-            print("1. Login Student")
-            print("2. Login Admin")
-            print("3. Register")
-            print("4. Exit")
-            self.__notify_if_any()
+            Color.prCyan("1. [L]ogin [S]tudent")
+            Color.prCyan("2. [L]ogin [A]dmin")
+            Color.prCyan("3. [R]egister")
+            Color.prCyan("4. [C]lear")
+            Color.prCyan("5. [E]xit")
+            Color.prCyan("==========================")
 
-            userchoice = int(input("choose: "))
- 
-            match userchoice:
-                case 1:
-                    (student, msg) = stu_ctrl.StudentController().login()
-                    if not msg:
-                        self.session = student
-                        self.notifications = ""
-                    else:
-                        self.notifications = msg
+            userchoice = input("User can choose either [Number] or the [First Letter]: ")
+
+            match userchoice.lower():
+                case "1" | "ls":
+                    self.session = stu_ctrl.StudentController().login()
                     break
-                case 2:
+                case "1" | "la":
                     self.session = Admin()
                     break
-                case 3:
-                    msg = stu_ctrl.StudentController().register()
-                    self.notifications = msg
+                case "3" | "r":
+                    stu_ctrl.StudentController().register()
                     break
-                case 4:
+                case "4" | "c":
+                    self.clear()
+                case "5" | "e":
+                    Color.prYellow("Exit")
                     self.exit()
                     break
 
     def admin_menu(self):
         while True:
-            self.clear()
-            print("3. Logout")
-            print("4. Quit")
-            self.__notify_if_any()
+            Color.prCyan("1. [V]iew All Students")
+            Color.prCyan("2. [G]roup Students")
+            Color.prCyan("3. [P]artition Students")
+            Color.prCyan("4. [R]emove Student")
+            Color.prCyan("5. [C]lear [D]ata")
+            Color.prCyan("6. [C]lear")
+            Color.prCyan("7. [L]ogout")
+            Color.prCyan("8. [Q]uit")
+            Color.prCyan("==========================")
 
-            userchoice = int(input("choose: "))
+            userchoice = input("User can choose either [Number] or the [First Letter]: ")
 
-            match userchoice:
-                case 3:
+            match userchoice.lower():
+                case "1" | "v":
+                    admin_ctrl.AdminController().view_students()
+                case "2" | "g":
+                    pass
+                case "3" | "p":
+                    pass
+                case "4" | "r":
+                    pass
+                case "5" | "cd":
+                    admin_ctrl.AdminController().clear_database()
+                case "6" | "c":
+                    self.clear()
+                case "7" | "l":
                     self.__logout()
                     break
-                case 4:
+                case "8" | "q":
+                    Color.prYellow("Exit")
                     self.exit()
                     break
 
     def student_menu(self):
         while True:
-            if self.session is not Student:
+
+            if type(self.session) is not Student:
                 break
 
-            self.clear()
-            print("1. Enrol New Subject")
-            print("2. Remove Subject")
-            print("3. View My Enrolment")
-            print("4. Subject Result")
-            print("5. Session Result")
-            print("6. Change Password")
-            print("7. Logout")
-            print("8. Quit")
-            self.__notify_if_any()
+            Color.prCyan("1. [E]nrol New Subject")
+            Color.prCyan("2. [R]emove Subject")
+            Color.prCyan("3. [V]iew My Enrolment")
+            Color.prCyan("4. [S]ubject Result")
+            Color.prCyan("5. [Se]ssion Result")
+            Color.prCyan("6. [C]hange [P]assword")
+            Color.prCyan("7. [C]lear")
+            Color.prCyan("8. [L]ogout")
+            Color.prCyan("9. [Q]uit")            
+            Color.prCyan("==========================")
 
             if self.session:
-                print(f"Hello \n{self.session.__str__()}")
+                Color.prYellow(f"Hello \n{self.session.__str__()}")
 
-            userchoice = int(input("choose: "))
+            userchoice = input("User can choose either [Number] or the [First Letter]: ")
 
-            match userchoice:
-                case 1:
+            match userchoice.lower():
+                case "1" | "e":
                     stu_ctrl.StudentController().enrol_subject(self.session)
-                    break
-                case 2:
+                case "2" | "r":
                     stu_ctrl.StudentController().remove_subject(self.session)
-                    break
-                case 7:
+                case "3" | "v":
+                    stu_ctrl.StudentController().view_enrolment(self.session)
+                case "4" | "s":
+                    pass
+                case "5" | "se":
+                    pass
+                case "6" | "cp":
+                    pass
+                case "7" | "c":
+                    self.clear()
+                case "8" | "l":
                     self.__logout()
                     break
+                case "9" | "q":
+                    Color.prYellow("Exit")
+                    self.exit()
+                    break
+
 
     def __logout(self):
-        self.notifications = ""
         self.session = None
-
-    def __notify_if_any(self):
-        if self.notifications:
-            print(self.notifications)
-            self.__reset_notification()
-
-    def __reset_notification(self):
-        self.notifications = ""
 
     @staticmethod
     def clear():

@@ -1,7 +1,8 @@
 import random
 import re
-from typing import List, Tuple
+from typing import List
 
+from common.color import Color
 from persistent import db
 from models.student import Student
 from models.subject import Subject
@@ -18,55 +19,69 @@ class StudentController:
             db.Database(),
         )
 
-    def login(self) -> Tuple[Student | None, str]:
-        (email, password) = self.view.login()
+    def login(self) -> Student | None:
 
-        if not self.__is_valid_login_session(email, password):
-            return (None, "Invalid Username or Password, please try again")
+        result: Student | None = None
 
-        selected_student = [
-            student
-            for student in self.db.context
-            if student.email.lower() == email.lower()
-            and student.password.lower() == password.lower()
-        ]
+        while type(result) is not Student:
+            (email, password) = self.view.login()
 
-        if not selected_student:
-            return (None, "Invalid Username or Password, please try again")
+            selected_student = self.__is_registed_user(email, password)
 
-        return (selected_student[0], "Login Successfully")
+            if not selected_student:
+                Color.prRed(f"Wrong Email or Password, please try again")
+                return
+
+            return selected_student[0]
 
     def register(self):
-        (username, email, password) = self.view.register()
 
-        if self.__is_exited_user(username):
-            return "User already exist, please try again"
-        elif self.__validate_email(email) and self.__validate_password(password):
-            new_student: Student = Student.create_student(username, email, password)
+        result = False
 
-            self.db.context.append(new_student)
+        while not result:
+            (email, password, confirmpassword) = self.view.register_step1()
 
-            self.db.save()
+            if not password == confirmpassword:
+                Color.prRed("Your confim password is not identical with your password")
+                return
+            if self.__is_existed_user(email):
+                Color.prRed("User already exist, please try again")
+                return
+            elif self.__validate_email(email) and self.__validate_password(password):
+                username = self.view.register_step2()
 
-            return "Successfully Create User"
-        else:
-            return "Invalid Username or Password, please try again"
+                new_student: Student = Student.create_student(username, email, password)
+
+                self.db.context.append(new_student)
+
+                self.db.save()
+
+                result = True
+
+                Color.prGreen(f"Successfully Create User: {new_student.name}")
+
+                break
+            else:
+                Color.prRed("Invalid Email or Password format, please try again")
+                return
 
     def change_password(self, ctx: Student):
         pass
 
     def enrol_subject(self, ctx: Student):
-
+        new_id = random.randint(1, 1000)
         new_subject: Subject = Subject.create_subject(
-            1, "Subject 1", random.randint(45, 100)
+            new_id, f"Subject {new_id}", random.randint(45, 100)
         )
-        students = [st for st in self.db.context if st.id == ctx.id]
+        students = [st for st in self.db.read() if st.id == ctx.id]
 
         if not students:
-            raise Exception(f"Could not find student with id {ctx.id}"f"Could not find student with id {ctx.id}")
+            raise Exception(f"Could not find student with id {ctx.id}")
 
         entity: Student = students[0]
-        entity.enrol_subject(new_subject)
+
+        if entity.enrol_subject(new_subject):
+            return
 
         self.db.save()
         self.view.enrol_subject(new_subject)
@@ -85,32 +100,28 @@ class StudentController:
     def remove_subject(self, ctx: Student):
         pass
 
-    def __is_valid_login_session(self, email, password):
-        return (
-            self.__validate_email(email)
-            and self.__validate_password(password)
-            and self.__is_registed_user(email, password)
-        )
-
     def __validate_password(self, password: str):
         return re.match(self.PASSWORD_PATTERN, password)
 
     def __validate_email(self, email: str):
         return re.match(self.EMAIL_PATTERN, email)
 
-    def __is_exited_user(self, username: str) -> bool:
-        students: List[Student] = self.db.read()
+    def __is_existed_user(self, email: str) -> bool:
+        return (
+            len(
+                [
+                    student
+                    for student in self.db.read()
+                    if student.email.lower() == email.lower()
+                ]
+            )
+            > 0
+        )
 
-        return [
-            student for student in students if student.email.lower() == username.lower()
-        ][0] is not None
-
-    def __is_registed_user(self, username: str, password: str) -> List[Student]:
-        students: List[Student] = self.db.read()
-
+    def __is_registed_user(self, email: str, password: str) -> List[Student]:
         return [
             student
-            for student in students
-            if student.email.lower() == username.lower()
+            for student in self.db.read()
+            if student.email.lower() == email.lower()
             and student.password.lower() == password.lower()
         ]
