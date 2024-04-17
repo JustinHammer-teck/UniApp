@@ -1,7 +1,7 @@
 import tkinter as tk
 
-from gui_src.controllers.student_controller import StudentController
-from gui_src.cores.view import View
+from controllers.student_controller import StudentController
+from cores.view import View
 
 
 class StudentView(tk.Tk, View):

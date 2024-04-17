@@ -1,16 +1,18 @@
-import tkinter as tk
-
-from gui_src.controllers.home_controller import HomeController
+from tkinter import NSEW, ttk
+from cores.core import Core
 from gui_src.cores.view import View
 
 
-class HomeView(tk.Tk, View):
-    def __init__(self) -> None:
-        super().__init__()
-        self.controller = HomeController()
+class HomeView(ttk.Frame, View):
+    def __init__(self, layout) -> None:
+        self.layout = layout
 
     def main(self):
-        self.mainloop()
+        ttk.Button(self.layout, text="Holad from the home view").grid(
+            row=0, column=0, sticky=NSEW
+        )
+
+        return self.layout
 
     def close(self):
         return

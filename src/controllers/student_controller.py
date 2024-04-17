@@ -69,6 +69,7 @@ class StudentController:
         pass
 
     def enrol_subject(self, ctx: Student):
+        print(ctx.id)
         new_id = random.randint(1, 1000)
         new_subject: Subject = Subject.create_subject(
             new_id, f"Subject {new_id}", random.randint(45, 100)
@@ -98,7 +99,8 @@ class StudentController:
         pass
 
     def remove_subject(self, ctx: Student):
-        pass
+        student_id = self.view.remove_subject()
+        print(f"Student ID That I want to remove: {student_id}")
 
     def __validate_password(self, password: str):
         return re.match(self.PASSWORD_PATTERN, password)

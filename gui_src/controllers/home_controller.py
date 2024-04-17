@@ -1,14 +1,12 @@
-from gui_src.cores.controller import Controller
-from gui_src.cores.view import View
-from gui_src.views.home_view import HomeView
+from cores.controller import Controller
+from cores.core import Core
 
 
 class HomeController(Controller):
-    view: View
-
-    def __init__(self) -> None:
+    def __init__(self, core) -> None:
         super().__init__()
-        self.view = HomeView()
+        self.root = core.root
+        self.view = self.view("Home")
 
     def admin_menu(self):
         pass
@@ -18,3 +16,4 @@ class HomeController(Controller):
 
     def main(self):
         self.view.main()
+        self.view.layout.pack()

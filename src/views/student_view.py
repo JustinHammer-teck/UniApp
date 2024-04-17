@@ -47,4 +47,7 @@ class StudentView:
                 print(subject.__str__())
 
     def remove_subject(self):
-        pass
+        Color.prYellow("Remove Subject")
+        subject_id = input("Subject Id: ")
+
+        return subject_id

@@ -14,6 +14,7 @@
           [ python312 virtualenv nodejs ] ++ (with pkgs.python312Packages; [
             pip
             python312Packages.python-dotenv
+            python312Packages.tkinter
           ]);
 
         shellHook = ''
