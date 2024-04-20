@@ -1,12 +1,11 @@
 #!/bin/zsh
 
-import tkinter as tk
+import tkinter
 
-from cores.default_layout import DefaultLayout
 from cores.core import Core
 
 
-class GuiUniApp(tk.Tk):
+class GuiUniApp(tkinter.Tk):
     def __init__(self):
         super().__init__()
         self.geometry("600x400")

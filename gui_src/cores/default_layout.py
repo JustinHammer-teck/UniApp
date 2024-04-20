@@ -1,15 +1,19 @@
 from tkinter import ttk
 
 
-class DefaultLayout(ttk.Frame):
+class DefaultLayout:
     def __init__(self, root):
+        self.applicaton = ttk.Frame(master=root)
+        self.menu = ttk.Frame(master=root)
 
-        super().__init__(master=root)
+        self.menu_widget()
+        self.application_widget()
 
-        self.rowconfigure(0, weight=1)
-        self.columnconfigure((0, 1, 2), weight=1, uniform="a")
+    def menu_widget(self):
+        self.menu.grid()
 
-        ttk.Label(self, text="Hola").grid(row=0, column=0)
-        ttk.Button(self, text="Hola").grid(row=0, column=1)
+    def application_widget(self):
+        pass
 
-        self.pack()
+    def main(self):
+        return self
