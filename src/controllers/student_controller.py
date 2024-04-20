@@ -66,7 +66,26 @@ class StudentController:
                 return
 
     def change_password(self, ctx: Student):
-        pass
+        students = [st for st in self.db.read() if st.id == ctx.id]
+
+        if not students:
+            raise Exception(f"Could not find student with id {ctx.id}")
+        
+        student = students[0]
+        
+        (newpassword, confirmnewpassword) = self.view.get_new_password()
+
+        if not newpassword == confirmnewpassword:
+            Color.prRed("Password does not match - try again")
+            return
+        if self.__validate_password(newpassword):
+            student.update_password(newpassword)
+            self.db.save()
+            return
+        else:
+            Color.prRed("Incorrect password format")
+            return
+
 
     def enrol_subject(self, ctx: Student):
         new_id = random.randint(1, 1000)
