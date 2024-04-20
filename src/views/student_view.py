@@ -34,8 +34,13 @@ class StudentView:
 
         return username
 
-    def change_password(self):
-        pass
+    def get_new_password(self):
+        Color.prYellow("Updating Password")
+
+        newpassword = getpass("New Password: ")
+        confirmnewpassword = getpass("Confirm Parrsowrd: ")
+
+        return (newpassword, confirmnewpassword)
 
     def enrol_subject(self, subject: Subject):
         print(f"Enrolling in {subject.name}")
