@@ -99,7 +99,7 @@ class StudentController:
 
         entity: Student = students[0]
 
-        if entity.enrol_subject(new_subject):
+        if not entity.enrol_subject(new_subject):
             return
 
         self.db.save()
