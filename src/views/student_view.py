@@ -34,13 +34,21 @@ class StudentView:
 
         return username
 
-    def get_new_password(self):
-        Color.prYellow("Updating Password")
+    def get_confirm_password(self, newpassword):
+        confirmnewpassword = getpass("Confirm Password: ")
+        while confirmnewpassword != newpassword:
+            print("Passwords do not match. Try again.")
+            return self.get_confirm_password(newpassword)
 
+        return confirmnewpassword
+    
+    def get_new_password(self):
+        print("Updating Password")
         newpassword = getpass("New Password: ")
-        confirmnewpassword = getpass("Confirm Parrsowrd: ")
+        confirmnewpassword = self.get_confirm_password(newpassword)
 
         return (newpassword, confirmnewpassword)
+
 
     def enrol_subject(self, subject: Subject):
         print(f"Enrolling in {subject.name}")
@@ -51,5 +59,9 @@ class StudentView:
             for subject in student.enrolment:
                 print(subject.__str__())
 
+    def enrol_subject(self, student: Student, subject: Subject):
+        Color.prYellow(f"Enrolling in {subject.name}")
+
     def remove_subject(self):
-        pass
+        removesubjectbyid = input("Remove Subject by ID: ")
+        return removesubjectbyid
