@@ -70,9 +70,9 @@ class StudentController:
 
         if not students:
             raise Exception(f"Could not find student with id {ctx.id}")
-
+        
         student = students[0]
-
+        
         (newpassword, confirmnewpassword) = self.view.get_new_password()
 
         if not newpassword == confirmnewpassword:
@@ -85,6 +85,7 @@ class StudentController:
         else:
             Color.prRed("Incorrect password format")
             return
+
 
     def enrol_subject(self, ctx: Student):
         new_id = random.randint(1, 1000)

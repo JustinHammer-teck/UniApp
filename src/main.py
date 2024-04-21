@@ -120,7 +120,7 @@ class UniApp:
                 case "5" | "se":
                     pass
                 case "6" | "cp":
-                    pass
+                    stu_ctrl.StudentController().change_password(self.session)
                 case "7" | "c":
                     self.clear()
                 case "8" | "l":
