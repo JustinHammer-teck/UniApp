@@ -34,17 +34,29 @@ class StudentView:
 
         return username
 
-    def change_password(self):
-        pass
+    def get_confirm_password(self, newpassword):
+        confirmnewpassword = getpass("Confirm Password: ")
+        while confirmnewpassword != newpassword:
+            print("Passwords do not match. Try again.")
+            return self.get_confirm_password(newpassword)
 
-    def enrol_subject(self, subject: Subject):
-        print(f"Enrolling in {subject.name}")
+        return confirmnewpassword
+
+    def get_new_password(self):
+        print("Updating Password")
+        newpassword = getpass("New Password: ")
+        confirmnewpassword = self.get_confirm_password(newpassword)
+
+        return (newpassword, confirmnewpassword)
 
     def view_enrolment(self, student: Student):
         print(f"Showing {len(student.enrolment)}")
         if student.enrolment:
             for subject in student.enrolment:
                 print(subject.__str__())
+
+    def enrol_subject(self, student: Student, subject: Subject):
+        Color.prYellow(f"Enrolling in {subject.name}")
 
     def remove_subject(self):
         Color.prYellow("Remove Subject")

@@ -1,5 +1,5 @@
-from gui_src.cores.controller import Controller
-from gui_src.views.admin_review import AdminView
+from cores.controller import Controller
+from views.admin_review import AdminView
 
 
 class AdminController(Controller):

@@ -15,7 +15,7 @@ class Student:
     enrolment: List[Subject]
 
     def __init__(self, name: str, email: str, password: str) -> None:
-        self.id = str(random.randint(1, 100000))
+        self.id = str(random.randint(1, 999999)).zfill(6)
         self.name, self.email, self.password = name, email, password
         self.enrolment = []
 
@@ -37,8 +37,15 @@ class Student:
         Color.prRed("Student Exceeded Subject Enrolment Capacity")
         return False
 
-    def delete_subject(self, subjectId: int):
-        self.enrolment
+    def delete_subject(self, subject_id: str):
+        for subject in self.enrolment:
+            if subject.id == subject_id:
+                self.enrolment.remove(subject)
+                return
 
     def __is_exceeded_enrolment(self) -> bool:
         return len(self.enrolment) >= 4
+
+    def update_password(self, new_password: str):
+        self.password = new_password
+        return self.password

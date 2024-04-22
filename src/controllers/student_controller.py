@@ -66,11 +66,28 @@ class StudentController:
                 return
 
     def change_password(self, ctx: Student):
-        pass
+        students = [st for st in self.db.read() if st.id == ctx.id]
+
+        if not students:
+            raise Exception(f"Could not find student with id {ctx.id}")
+
+        student = students[0]
+
+        (newpassword, confirmnewpassword) = self.view.get_new_password()
+
+        if not newpassword == confirmnewpassword:
+            Color.prRed("Password does not match - try again")
+            return
+        if self.__validate_password(newpassword):
+            student.update_password(newpassword)
+            self.db.save()
+            return
+        else:
+            Color.prRed("Incorrect password format")
+            return
 
     def enrol_subject(self, ctx: Student):
-        print(ctx.id)
-        new_id = random.randint(1, 1000)
+        new_id = str(random.randint(1, 999)).zfill(3)
         new_subject: Subject = Subject.create_subject(
             new_id, f"Subject {new_id}", random.randint(45, 100)
         )
@@ -81,11 +98,11 @@ class StudentController:
 
         entity: Student = students[0]
 
-        if entity.enrol_subject(new_subject):
+        if not entity.enrol_subject(new_subject):
             return
 
         self.db.save()
-        self.view.enrol_subject(new_subject)
+        self.view.enrol_subject(entity, new_subject)
 
     def view_enrolment(self, ctx: Student):
         students = [st for st in self.db.read() if st.id == ctx.id]
@@ -99,8 +116,31 @@ class StudentController:
         pass
 
     def remove_subject(self, ctx: Student):
-        student_id = self.view.remove_subject()
-        print(f"Student ID That I want to remove: {student_id}")
+        students = [st for st in self.db.read() if st.id == ctx.id]
+
+        if not students:
+            raise Exception(f"Could not find student with id {ctx.id}")
+
+        student = students[0]
+
+        remove_subject_id = self.view.remove_subject()
+
+        subject_found = False
+        for subject in student.enrolment:
+            if subject.id == remove_subject_id:
+                subject_found = True
+                student.delete_subject(remove_subject_id)
+                Color.prYellow(f"Dropping Subject-{remove_subject_id}")
+                Color.prYellow(
+                    f"You are now enrolled in {len(student.enrolment)} out of 4 subjects "
+                )
+                break
+
+        if not subject_found:
+            Color.prRed(f"Subject-{remove_subject_id} not found - Try Again")
+            return
+
+        self.db.save()
 
     def __validate_password(self, password: str):
         return re.match(self.PASSWORD_PATTERN, password)
