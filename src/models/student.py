@@ -37,8 +37,11 @@ class Student:
         Color.prRed("Student Exceeded Subject Enrolment Capacity")
         return False
 
-    def delete_subject(self, subjectId: int):
-        self.enrolment
+    def delete_subject(self, subject_id: str):
+        for subject in self.enrolment:
+            if subject.id == subject_id:
+                self.enrolment.remove(subject)
+                return
 
     def __is_exceeded_enrolment(self) -> bool:
         return len(self.enrolment) >= 4
