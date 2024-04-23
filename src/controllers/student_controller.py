@@ -11,7 +11,7 @@ from views import student_view as studentv
 
 class StudentController:
     EMAIL_PATTERN = r"^[a-zA-Z]+\.+[a-zA-Z]+@university\.com$"
-    PASSWORD_PATTERN = r"^[A-Z][A-Za-z]{4,}\d{3,}$"
+    PASSWORD_PATTERN = r"^[A-Z][A-Za-z]{6,}\d{3,}$"
 
     def __init__(self) -> None:
         self.view, self.db = (
@@ -20,50 +20,53 @@ class StudentController:
         )
 
     def login(self) -> Student | None:
+        Color.prGreen("Student Sign In")
 
-        result: Student | None = None
-
-        while type(result) is not Student:
+        while True:
             (email, password) = self.view.login()
 
-            selected_student = self.__is_registed_user(email, password)
+            if self.__validate_email(email) and self.__validate_password(password):
+                Color.prYellow(f"email and password formats acceptable")
+                selected_student = self.__is_registed_user(email, password)
 
-            if not selected_student:
-                Color.prRed(f"Wrong Email or Password, please try again")
-                return
-
-            return selected_student[0]
+                if selected_student:
+                    return selected_student[0]
+                else:
+                    Color.prRed("Student does not exist")
+                    break
+            else:
+                Color.prRed("Incorrect email or password format")
 
     def register(self):
+        Color.prGreen("Student Sign Up")
+        
+        while True:
+            (email, password) = self.view.register_step1()
 
-        result = False
+            if self.__validate_email(email) and self.__validate_password(password):
+                Color.prYellow(f"Email and password formats acceptable")
+                if self.__is_existed_user(email):
+                    existing_student = self.__get_existing_student(email)
+                    Color.prRed(f"Student {existing_student.name} already exists")
+                    break
+                else:
+                    username = self.view.register_step2()
+                    new_student: Student = Student.create_student(username, email, password)
 
-        while not result:
-            (email, password, confirmpassword) = self.view.register_step1()
+                    self.db.context.append(new_student)
+                    self.db.save()
 
-            if not password == confirmpassword:
-                Color.prRed("Your confim password is not identical with your password")
-                return
-            if self.__is_existed_user(email):
-                Color.prRed("User already exist, please try again")
-                return
-            elif self.__validate_email(email) and self.__validate_password(password):
-                username = self.view.register_step2()
-
-                new_student: Student = Student.create_student(username, email, password)
-
-                self.db.context.append(new_student)
-
-                self.db.save()
-
-                result = True
-
-                Color.prGreen(f"Successfully Create User: {new_student.name}")
-
-                break
+                    Color.prYellow(f"Enrolling Student {new_student.name}")
+                    break
             else:
-                Color.prRed("Invalid Email or Password format, please try again")
-                return
+                Color.prRed("Incorrect email or password format")
+
+    def __get_existing_student(self, email: str) -> Student | None:
+        existing_students = [student for student in self.db.read() if student.email.lower() == email.lower()]
+        if existing_students:
+            return existing_students[0]
+        return None
+
 
     def change_password(self, ctx: Student):
         students = [st for st in self.db.read() if st.id == ctx.id]
@@ -75,9 +78,6 @@ class StudentController:
         
         (newpassword, confirmnewpassword) = self.view.get_new_password()
 
-        if not newpassword == confirmnewpassword:
-            Color.prRed("Password does not match - try again")
-            return
         if self.__validate_password(newpassword):
             student.update_password(newpassword)
             self.db.save()
@@ -90,7 +90,7 @@ class StudentController:
     def enrol_subject(self, ctx: Student):
         new_id = str(random.randint(1, 999)).zfill(3)
         new_subject: Subject = Subject.create_subject(
-            new_id, f"Subject {new_id}", random.randint(45, 100)
+            new_id, f"Subject-{new_id}", random.randint(45, 100)
         )
         students = [st for st in self.db.read() if st.id == ctx.id]
 
@@ -112,9 +112,6 @@ class StudentController:
             raise Exception(f"Could not find student with id {ctx.id}")
 
         self.view.view_enrolment(students[0])
-
-    def get_subject_info(self, ctx: Student):
-        pass
 
     def remove_subject(self, ctx: Student):
         students = [st for st in self.db.read() if st.id == ctx.id]
