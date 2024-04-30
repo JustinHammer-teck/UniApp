@@ -8,58 +8,48 @@ from models.subject import Subject
 class StudentView:
 
     def login(self):
-        Color.prGreen("Student Sign In")
-
-        email = input("your email: ")
-        password = getpass("your password: ")
+        email = input("Email: ")
+        password = input("Password: ")
 
         return (email, password)
 
     def register_step1(self):
-        Color.prGreen("Student Sign Up")
+        email = input("Email: ")
+        password = input("Password: ")
 
-        print("eg: luck.lucky@university.com")
-        email = input("your email:")
-        print(
-            "password should [start] with uppercase character, [minumum] 5 letters, followed by [3] or more digit"
-        )
-        password = getpass("your password: ")
-        confirmpassword = getpass("confirm your password: ")
-
-        return (email, password, confirmpassword)
+        return (email, password)
 
     def register_step2(self):
-        print("eg: Lucky Luck")
-        username = input("your username: ")
+        username = input("Name: ")
 
         return username
 
     def get_confirm_password(self, newpassword):
-        confirmnewpassword = getpass("Confirm Password: ")
+        confirmnewpassword = input("Confirm Password: ")
         while confirmnewpassword != newpassword:
-            print("Passwords do not match. Try again.")
+            Color.prRed("Password does not match - try again")
             return self.get_confirm_password(newpassword)
 
         return confirmnewpassword
 
     def get_new_password(self):
-        print("Updating Password")
-        newpassword = getpass("New Password: ")
+        Color.prYellow("Updating Password")
+        newpassword = input("New Password: ")
         confirmnewpassword = self.get_confirm_password(newpassword)
 
         return (newpassword, confirmnewpassword)
 
-    def view_enrolment(self, student: Student):
-        print(f"Showing {len(student.enrolment)}")
-        if student.enrolment:
-            for subject in student.enrolment:
-                print(subject.__str__())
-
     def enrol_subject(self, student: Student, subject: Subject):
         Color.prYellow(f"Enrolling in {subject.name}")
+        Color.prYellow(f"You are now enrolled in {len(student.enrolment)} out of 4 subjects")  
+
+    def view_enrolment(self, student: Student):
+        Color.prYellow(f"Showing {len(student.enrolment)} subjects")
+        if student.enrolment:
+            for subject in student.enrolment:
+                print(f"[ {subject.__str__()} ]")
 
     def remove_subject(self):
-        Color.prYellow("Remove Subject")
-        subject_id = input("Subject Id: ")
+        removesubjectbyid = input("Remove Subject by ID: ")
 
-        return subject_id
+        return removesubjectbyid
