@@ -44,14 +44,14 @@ class UniApp:
             userchoice = input("\033[36mAdmin System (c/g/p/r/s/x): \033[0m")
 
             match userchoice.lower():
-                case "1" | "":
+                case "1" | "c":
                     admin_ctrl.AdminController().clear_database()
                 case "2" | "g":
-                    pass
+                    admin_ctrl.AdminController().view_by_grade()
                 case "3" | "p":
-                    pass
+                    admin_ctrl.AdminController().view_by_passfail()
                 case "4" | "r":
-                    pass
+                    admin_ctrl.AdminController().remove_student()
                 case "5" | "s":
                     admin_ctrl.AdminController().view_students()
                 case "6" | "x":
