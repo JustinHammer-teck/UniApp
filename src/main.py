@@ -25,7 +25,9 @@ class UniApp:
 
     def default_menu(self):
         while True:
-            userchoice = input("\033[36mUniversity System: (A)dmin, (S)tudent, or X : \033[0m")
+            userchoice = input(
+                "\033[36mUniversity System: (A)dmin, (S)tudent, or X : \033[0m"
+            )
 
             match userchoice.lower():
                 case "1" | "a":
@@ -72,7 +74,6 @@ class UniApp:
 
     def student_menu(self):
         while True:
-
             if type(self.session) is not Student:
                 break
 
@@ -97,15 +98,16 @@ class UniApp:
     @staticmethod
     def clear():
         # for windows
-        if name == 'nt':
-            _ = system('cls')
+        if name == "nt":
+            _ = system("cls")
         # for mac and linux(here, os.name is 'posix')
         else:
-            _ = system('clear')
+            _ = system("clear")
 
     @staticmethod
     def exit():
         sys.exit()
+
 
 if __name__ == "__main__":
     UniApp().main()

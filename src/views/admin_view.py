@@ -5,9 +5,8 @@ from models.student import Student
 
 class AdminView:
     def remove_student(self):
-        Id = input("Remove by ID: ")
-        return Id
-        # Color.prYellow("Student List")
+        id = input("Remove by ID: ")
+        return id
 
     def view_students(self, students: List[Student]):
         Color.prYellow("Student List")
@@ -29,16 +28,20 @@ class AdminView:
     def view_by_passfail(self, grades_dict: dict):
         Color.prYellow("PASS/FAIL Partition")
         if grades_dict:
-            if grades_dict["Z"]: 
+            if grades_dict["Z"]:
                 print("FAIL", end=" --> ")
                 print(f"[{', '.join(grades_dict['Z'])}]")
             else:
                 print("FAIL --> []")
-                
             print("PASS", end=" --> ")
-            pass_grades_info = ', '.join([f"{', '.join(students)}" for grade, students in grades_dict.items() if grade != "Z"])
+            pass_grades_info = ", ".join(
+                [
+                    f"{', '.join(students)}"
+                    for grade, students in grades_dict.items()
+                    if grade != "Z"
+                ]
+            )
             print(f"[{pass_grades_info}]")
-
         else:
             Color.prYellow("There is no student yet")
 
