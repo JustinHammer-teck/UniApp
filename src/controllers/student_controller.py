@@ -51,13 +51,12 @@ class StudentController:
                     break
                 else:
                     username = self.view.register_step2()
-                    new_student: Student = Student.create_student(username, email, password)
-
-                    self.db.context.append(new_student)
-                    self.db.save()
-
-                    Color.prYellow(f"Enrolling Student {new_student.name}")
-                    break
+                    if username:  # Additional check to ensure `username` is not empty
+                        new_student: Student = Student.create_student(username, email, password)
+                        self.db.context.append(new_student)
+                        self.db.save()
+                        Color.prYellow(f"Enrolling Student {new_student.name}")
+                        break
             else:
                 Color.prRed("Incorrect email or password format")
 
