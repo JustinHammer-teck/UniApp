@@ -7,63 +7,66 @@ from cores.view import View
 class Core:
     current_view: View | None
     current_controller: Controller | None
+    user: None
 
     def __init__(self, parent):
         self.root = parent
         self.current_view = None
         self.current_controller = None
         self.is_auth = False
+        self.user = None
 
-    def controller(self, controller: str, action: str = "main", **kwargs):
+    def controller(self, controller_name: str, action: str = "main", **kwargs):
         try:
-            module = self.__check_module_existent(
-                f"controllers.{controller.lower()}_controller"
-            )
-
-            controller_class = getattr(module, f"{controller.capitalize()}Controller")
+            controller_class = self.__try_get_module("controller", controller_name)
 
             if not self.__is_a_same_instance(controller_class):
+                del self.current_controller
                 self.current_controller = controller_class(self)
 
             controller_action = getattr(self.current_controller, action)
 
             if action == "main" and self.current_controller:
-                self.current_controller.set_view(self.view(view=controller.lower()))
+                self.current_controller.set_view(
+                    self.view(view_name=controller_name.lower())
+                )
                 return controller_action()
 
             return controller_action(**kwargs)
 
         except (ImportError, AttributeError) as e:
             print(
-                f"Error loading or executing controller: {controller}/{action} with error {e}"
+                f"Error loading or executing controller: {controller_name}/{action} with error {e}"
             )
 
-    def view(self, view: str, partial="main"):
+    def view(self, view_name: str, action="main", **kwargs):
         try:
-            module = self.__check_module_existent(f"views.{view.lower()}_view")
-            view_class = getattr(module, f"{view.capitalize()}View")
+            view_class = self.__try_get_module("view", view_name)
 
-            if not self.current_view:
-                self.current_view = view_class(self)
-            elif self.current_view and not isinstance(
-                view_class, type(self.current_view)
-            ):
+            if self.current_view:
                 self.current_view.close()
 
-                for widgets in self.root.winfo_children():
-                    widgets.destroy()
+                del self.current_view
+            self.current_view = view_class(self)
 
-                self.current_view = view_class(self)
-
-            view_partial = getattr(self.current_view, partial)
-            return view_partial()
+            view_partial = getattr(self.current_view, action)
+            self.root.update()
+            view_partial()
 
         except (ImportError, AttributeError) as e:
             # Handle the error (module or class or method not found)
-            print(f"Error loading view: {view}/{partial} with error {e}")
+            print(f"Error loading view: {view_name}/{action} with error {e}")
+
+    def logout(self):
+        self.is_auth = False
+        self.user = None
 
     def show_error_window(self):
         pass
+
+    def __try_get_module(self, core: str, module_name: str):
+        module = self.__check_module_existent(f"{core.lower()}s.{module_name.lower()}")
+        return getattr(module, f"{module_name.capitalize()}{core.capitalize()}")
 
     def __is_a_same_instance(self, controller_cls):
         return self.current_controller and isinstance(

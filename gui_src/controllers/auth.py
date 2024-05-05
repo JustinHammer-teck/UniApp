@@ -9,7 +9,11 @@ class AuthController(Controller):
 
     def login(self, username: str, password: str):
         print(username)
-        return self.core.controller("home")
+        self.core.controller("home")
+
+    def logout(self):
+        self.core.logout()
+        return self.core.controller("auth")
 
     def main(self):
         self.view

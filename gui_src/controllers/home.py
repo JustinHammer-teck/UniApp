@@ -1,5 +1,4 @@
 from cores.controller import Controller
-from cores.view import View
 
 
 class HomeController(Controller):
