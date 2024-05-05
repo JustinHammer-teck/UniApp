@@ -20,9 +20,12 @@ class StudentView:
         return (email, password)
 
     def register_step2(self):
-        username = input("Name: ")
-
-        return username
+        while True:
+            username = input("Name: ").strip()
+            if username:  # Ensure the input is not empty or just whitespace
+                return username
+            else:
+                print("Name cannot be empty. Please enter a valid name.")
 
     def get_confirm_password(self, newpassword):
         confirmnewpassword = input("Confirm Password: ")
