@@ -66,7 +66,6 @@ class StudentController:
             return existing_students[0]
         return None
 
-
     def change_password(self, ctx: Student):
         students = [st for st in self.db.read() if st.id == ctx.id]
 
@@ -84,7 +83,6 @@ class StudentController:
         else:
             Color.prRed("Incorrect password format")
             return
-
 
     def enrol_subject(self, ctx: Student):
         new_id = str(random.randint(1, 999)).zfill(3)
