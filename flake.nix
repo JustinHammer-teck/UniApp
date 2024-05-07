@@ -14,12 +14,14 @@
           [ python312 virtualenv nodejs ] ++ (with pkgs.python312Packages; [
             pip
             python312Packages.python-dotenv
+            python312Packages.tkinter
           ]);
 
         shellHook = ''
           echo "hello to python dev shell"
         '';
 
+        PYTHON_PATH = "${pkgs.python312}/bin/python3";
       };
     };
 }

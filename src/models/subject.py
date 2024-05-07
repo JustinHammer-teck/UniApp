@@ -13,7 +13,7 @@ class Subject:
         elif self.mark >= 85:
             return "HD"
 
-    def __init__(self, id: int, name: str, mark: float) -> None:
+    def __init__(self, id: str, name: str, mark: float) -> None:
         self.id = id
         self.name = name
         self.mark = mark
@@ -25,5 +25,5 @@ class Subject:
         return f"Subject:: {self.id} -- Mark =  {self.mark} -- Grade =  {self.grade}"
 
     @staticmethod
-    def create_subject(id: int, name: str, mark: float):
+    def create_subject(id: str, name: str, mark: float):
         return Subject(id, name, mark)

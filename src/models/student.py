@@ -45,7 +45,7 @@ class Student:
 
     def __is_exceeded_enrolment(self) -> bool:
         return len(self.enrolment) >= 4
-    
+
     def update_password(self, new_password: str):
         self.password = new_password
         return self.password

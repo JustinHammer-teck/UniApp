@@ -34,7 +34,7 @@ class StudentView:
             return self.get_confirm_password(newpassword)
 
         return confirmnewpassword
-    
+
     def get_new_password(self):
         Color.prYellow("Updating Password")
         newpassword = input("New Password: ")
