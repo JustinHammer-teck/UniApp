@@ -5,35 +5,35 @@ from models.student import Student
 
 class AdminView:
     def remove_student(self):
-        id = input("Remove by ID: ")
+        id = input("\tRemove by ID: ")
         return id
 
     def view_students(self, students: List[Student]):
-        Color.prYellow("Student List")
+        Color.prYellow("\tStudent List")
         if students:
             for student in students:
-                print(student.__str__())
+                print(f"\t{student.__str__()}")
         else:
-            Color.prYellow("There is no student yet")
+            print("\t\t< Nothing to Display>")
 
     def view_by_grade(self, grades_dict: dict):
-        Color.prYellow("Grade Grouping")
+        Color.prYellow("\tGrade Grouping")
         if grades_dict:
             for grades, students in grades_dict.items():
-                print(f"{grades}:", end=" --> ")
+                print(f"\t{grades}:", end=" --> ")
                 print(f"[{', '.join(students)}]")
         else:
-            Color.prYellow("There is no student yet")
+            print("\t\t< Nothing to Display>")
 
     def view_by_passfail(self, grades_dict: dict):
-        Color.prYellow("PASS/FAIL Partition")
+        Color.prYellow("\tPASS/FAIL Partition")
         if grades_dict:
             if grades_dict["Z"]:
-                print("FAIL", end=" --> ")
-                print(f"[{', '.join(grades_dict['Z'])}]")
+                print("\tFAIL", end=" --> ")
+                print(f"\t[{', '.join(grades_dict['Z'])}]")
             else:
-                print("FAIL --> []")
-            print("PASS", end=" --> ")
+                print("\tFAIL --> []")
+            print("\tPASS", end=" --> ")
             pass_grades_info = ", ".join(
                 [
                     f"{', '.join(students)}"
@@ -41,14 +41,15 @@ class AdminView:
                     if grade != "Z"
                 ]
             )
-            print(f"[{pass_grades_info}]")
+            print(f"\t[{pass_grades_info}]")
         else:
-            Color.prYellow("There is no student yet")
+            print("\t\tFAIL --> []")
+            print("\t\tPASS --> []")
 
     def clear_database(self) -> bool:
-        Color.prYellow("Clearing students database")
+        Color.prYellow("\tClearing students database")
         user_choice = input(
-            "\033[91m Are You Sure To Delete All Student Data ? [Y] yes or [N] no: \033[00m"
+            "\033[91m \tAre You Sure To Delete All Student Data ? [Y] yes or [N] no: \033[00m"
         )
 
         return True if user_choice.lower() == "y" else False
