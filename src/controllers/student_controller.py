@@ -71,9 +71,9 @@ class StudentController:
 
         if not students:
             raise Exception(f"Could not find student with id {ctx.id}")
-        
+
         student = students[0]
-        
+
         (newpassword, confirmnewpassword) = self.view.get_new_password()
 
         if self.__validate_password(newpassword):
@@ -115,24 +115,26 @@ class StudentController:
 
         if not students:
             raise Exception(f"Could not find student with id {ctx.id}")
-        
+
         student = students[0]
 
         remove_subject_id = self.view.remove_subject()
-        
+
         subject_found = False
         for subject in student.enrolment:
             if subject.id == remove_subject_id:
                 subject_found = True
                 student.delete_subject(remove_subject_id)
                 Color.prYellow(f"Dropping Subject-{remove_subject_id}")
-                Color.prYellow(f"You are now enrolled in {len(student.enrolment)} out of 4 subjects ")
+                Color.prYellow(
+                    f"You are now enrolled in {len(student.enrolment)} out of 4 subjects "
+                )
                 break
 
         if not subject_found:
             Color.prRed(f"Subject-{remove_subject_id} not found - Try Again")
             return
-        
+
         self.db.save()
 
     def __validate_password(self, password: str):

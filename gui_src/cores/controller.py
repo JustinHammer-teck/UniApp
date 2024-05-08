@@ -1,8 +1,14 @@
 import abc
 
+from cores.view import View
+
 
 class Controller(metaclass=abc.ABCMeta):
+    view: View
 
     @abc.abstractmethod
     def main(self):
-        return
+        pass
+
+    def set_view(self, view):
+        self.view = view
