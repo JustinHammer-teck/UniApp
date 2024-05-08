@@ -48,7 +48,7 @@ class AdminView:
     def clear_database(self) -> bool:
         Color.prYellow("\tClearing students database")
         user_choice = input(
-            "\t\033[91m Are You Sure To Delete All Student Data ? [Y] yes or [N] no: \033[00m"
+            "\t\033[91mAre you sure you want to clear the database (Y)ES/(N)O: \033[00m"
         )
 
         return True if user_choice.lower() == "y" else False

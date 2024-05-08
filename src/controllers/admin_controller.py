@@ -36,7 +36,7 @@ class AdminController:
         user_confirmation = self.view.clear_database()
         if user_confirmation:
             self.db.clear()
-            Color.prGreen("\tSuccessfully Clear All Data")
+            Color.prYellow("\tStudents data cleared")
 
     def __add_grade_groups(self, grade, student_info, grade_groups):
         if grade not in grade_groups:
