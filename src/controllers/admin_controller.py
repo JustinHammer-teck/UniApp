@@ -26,17 +26,17 @@ class AdminController:
         student = [student for student in students if student.id == student_id]
 
         if not student:
-            Color.prRed(f"Student {student_id} does not exist")
+            Color.prRed(f"\tStudent {student_id} does not exist")
             return
         self.db.context.remove(student[0])
         self.db.save()
-        Color.prYellow(f"Removing Student {student_id} account")
+        Color.prYellow(f"\tRemoving Student {student_id} account")
 
     def clear_database(self):
         user_confirmation = self.view.clear_database()
         if user_confirmation:
             self.db.clear()
-            Color.prGreen("Successfully Clear All Data")
+            Color.prGreen("\tSuccessfully Clear All Data")
 
     def __add_grade_groups(self, grade, student_info, grade_groups):
         if grade not in grade_groups:
