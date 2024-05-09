@@ -12,9 +12,9 @@ class AdminView:
         Color.prYellow("\tStudent List")
         if students:
             for student in students:
-                print("\t" + student.__str__())
+                print(f"\t{student.__str__()}")
         else:
-            Color.prYellow("\tThere is no student yet")
+            print("\t\t< Nothing to Display>")
 
     def view_by_grade(self, grades_dict: dict):
         Color.prYellow("\tGrade Grouping")
@@ -23,12 +23,12 @@ class AdminView:
                 print(f"\t{grades}:", end=" --> ")
                 print(f"[{', '.join(students)}]")
         else:
-            Color.prYellow("\tThere is no student yet")
+            print("\t\t< Nothing to Display>")
 
     def view_by_passfail(self, grades_dict: dict):
         Color.prYellow("\tPASS/FAIL Partition")
         if grades_dict:
-            if grades_dict["Z"]:
+            if "Z" in grades_dict:
                 print("\tFAIL", end=" --> ")
                 print(f"[{', '.join(grades_dict['Z'])}]")
             else:
@@ -43,7 +43,8 @@ class AdminView:
             )
             print(f"\t[{pass_grades_info}]")
         else:
-            Color.prYellow("\tThere is no student yet")
+            print("\t\tFAIL --> []")
+            print("\t\tPASS --> []")
 
     def clear_database(self) -> bool:
         Color.prYellow("\tClearing students database")

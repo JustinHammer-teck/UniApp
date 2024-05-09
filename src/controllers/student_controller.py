@@ -38,7 +38,6 @@ class StudentController:
 
     def register(self):
         Color.prGreen("\tStudent Sign Up")
-
         while True:
             (email, password) = self.view.register_step1()
 
@@ -74,7 +73,7 @@ class StudentController:
         students = [st for st in self.db.read() if st.id == ctx.id]
 
         if not students:
-            raise Exception(f"Could not find student with id {ctx.id}")
+            raise Exception(f"\t\tCould not find student with id {ctx.id}")
 
         student = students[0]
 
@@ -85,7 +84,7 @@ class StudentController:
             self.db.save()
             return
         else:
-            Color.prRed("\tIncorrect password format")
+            Color.prRed("\t\tIncorrect password format")
             return
 
     def enrol_subject(self, ctx: Student):
@@ -96,7 +95,7 @@ class StudentController:
         students = [st for st in self.db.read() if st.id == ctx.id]
 
         if not students:
-            raise Exception(f"Could not find student with id {ctx.id}")
+            raise Exception(f"\t\tCould not find student with id {ctx.id}")
 
         entity: Student = students[0]
 
@@ -110,7 +109,7 @@ class StudentController:
         students = [st for st in self.db.read() if st.id == ctx.id]
 
         if not students:
-            raise Exception(f"Could not find student with id {ctx.id}")
+            raise Exception(f"\t\tCould not find student with id {ctx.id}")
 
         self.view.view_enrolment(students[0])
 
@@ -118,7 +117,7 @@ class StudentController:
         students = [st for st in self.db.read() if st.id == ctx.id]
 
         if not students:
-            raise Exception(f"Could not find student with id {ctx.id}")
+            raise Exception(f"\t\tCould not find student with id {ctx.id}")
 
         student = students[0]
 
