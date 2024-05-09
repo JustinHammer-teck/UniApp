@@ -22,7 +22,7 @@ class Subject:
         return self.mark >= 50
 
     def __str__(self) -> str:
-        return f"Subject:: {self.id} -- Mark =  {self.mark} -- Grade =  {self.grade}"
+        return f"Subject::{self.id} -- mark =  {self.mark} -- grade =  {self.grade}"
 
     @staticmethod
     def create_subject(id: str, name: str, mark: float):

@@ -20,34 +20,34 @@ class StudentController:
         )
 
     def login(self) -> Student | None:
-        Color.prGreen("Student Sign In")
+        Color.prGreen("\tStudent Sign In")
 
         while True:
             (email, password) = self.view.login()
 
             if self.__validate_email(email) and self.__validate_password(password):
-                Color.prYellow(f"email and password formats acceptable")
+                Color.prYellow(f"\temail and password formats acceptable")
                 selected_student = self.__is_registed_user(email, password)
 
                 if selected_student:
                     return selected_student[0]
                 else:
-                    Color.prRed("Student does not exist")
+                    Color.prRed("\tStudent does not exist")
                     break
             else:
-                Color.prRed("Incorrect email or password format")
+                Color.prRed("\tIncorrect email or password format")
 
     def register(self):
-        Color.prGreen("Student Sign Up")
+        Color.prGreen("\tStudent Sign Up")
         
         while True:
             (email, password) = self.view.register_step1()
 
             if self.__validate_email(email) and self.__validate_password(password):
-                Color.prYellow(f"Email and password formats acceptable")
+                Color.prYellow(f"\tEmail and password formats acceptable")
                 if self.__is_existed_user(email):
                     existing_student = self.__get_existing_student(email)
-                    Color.prRed(f"Student {existing_student.name} already exists")
+                    Color.prRed(f"\tStudent {existing_student.name} already exists")
                     break
                 else:
                     username = self.view.register_step2()
@@ -55,10 +55,10 @@ class StudentController:
                         new_student: Student = Student.create_student(username, email, password)
                         self.db.context.append(new_student)
                         self.db.save()
-                        Color.prYellow(f"Enrolling Student {new_student.name}")
+                        Color.prYellow(f"\tEnrolling Student {new_student.name}")
                         break
             else:
-                Color.prRed("Incorrect email or password format")
+                Color.prRed("\tIncorrect email or password format")
 
     def __get_existing_student(self, email: str) -> Student | None:
         existing_students = [student for student in self.db.read() if student.email.lower() == email.lower()]
@@ -70,7 +70,7 @@ class StudentController:
         students = [st for st in self.db.read() if st.id == ctx.id]
 
         if not students:
-            raise Exception(f"Could not find student with id {ctx.id}")
+            raise Exception(f"\t\tCould not find student with id {ctx.id}")
 
         student = students[0]
 
@@ -81,7 +81,7 @@ class StudentController:
             self.db.save()
             return
         else:
-            Color.prRed("Incorrect password format")
+            Color.prRed("\t\tIncorrect password format")
             return
 
     def enrol_subject(self, ctx: Student):
@@ -92,7 +92,7 @@ class StudentController:
         students = [st for st in self.db.read() if st.id == ctx.id]
 
         if not students:
-            raise Exception(f"Could not find student with id {ctx.id}")
+            raise Exception(f"\t\tCould not find student with id {ctx.id}")
 
         entity: Student = students[0]
 
@@ -106,7 +106,7 @@ class StudentController:
         students = [st for st in self.db.read() if st.id == ctx.id]
 
         if not students:
-            raise Exception(f"Could not find student with id {ctx.id}")
+            raise Exception(f"\t\tCould not find student with id {ctx.id}")
 
         self.view.view_enrolment(students[0])
 
@@ -114,7 +114,7 @@ class StudentController:
         students = [st for st in self.db.read() if st.id == ctx.id]
 
         if not students:
-            raise Exception(f"Could not find student with id {ctx.id}")
+            raise Exception(f"\t\tCould not find student with id {ctx.id}")
 
         student = students[0]
 
@@ -125,14 +125,14 @@ class StudentController:
             if subject.id == remove_subject_id:
                 subject_found = True
                 student.delete_subject(remove_subject_id)
-                Color.prYellow(f"Dropping Subject-{remove_subject_id}")
+                Color.prYellow(f"\t\tDropping Subject-{remove_subject_id}")
                 Color.prYellow(
-                    f"You are now enrolled in {len(student.enrolment)} out of 4 subjects "
+                    f"\t\tYou are now enrolled in {len(student.enrolment)} out of 4 subjects "
                 )
                 break
 
         if not subject_found:
-            Color.prRed(f"Subject-{remove_subject_id} not found - Try Again")
+            Color.prRed(f"\t\tSubject-{remove_subject_id} not found - Try Again")
             return
 
         self.db.save()
