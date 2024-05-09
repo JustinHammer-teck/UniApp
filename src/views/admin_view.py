@@ -28,9 +28,9 @@ class AdminView:
     def view_by_passfail(self, grades_dict: dict):
         Color.prYellow("\tPASS/FAIL Partition")
         if grades_dict:
-            if grades_dict["Z"]:
+            if "Z" in grades_dict:
                 print("\tFAIL", end=" --> ")
-                print(f"\t[{', '.join(grades_dict['Z'])}]")
+                print(f"[{', '.join(grades_dict['Z'])}]")
             else:
                 print("\tFAIL --> []")
             print("\tPASS", end=" --> ")
@@ -41,7 +41,7 @@ class AdminView:
                     if grade != "Z"
                 ]
             )
-            print(f"\t[{pass_grades_info}]")
+            print(f"[{pass_grades_info}]")
         else:
             print("\t\tFAIL --> []")
             print("\t\tPASS --> []")
