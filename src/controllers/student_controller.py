@@ -90,7 +90,7 @@ class StudentController:
     def enrol_subject(self, ctx: Student):
         new_id = str(random.randint(1, 999)).zfill(3)
         new_subject: Subject = Subject.create_subject(
-            new_id, new_id, random.randint(45, 100)
+            new_id, f"Subject-{new_id}", random.randint(45, 100)
         )
         students = [st for st in self.db.read() if st.id == ctx.id]
 
