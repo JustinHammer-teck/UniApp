@@ -21,7 +21,7 @@
           echo "hello to python dev shell"
         '';
 
-        PYTHON_PATH = "${pkgs.python312}/bin/python3";
+        PYTHON_PATH = "${pkgs.python312}/bin/python3:./src";
       };
     };
 }

@@ -1,6 +1,7 @@
 from common.color import Color
 from persistent.db import Database
-from views.admin_view import AdminView
+
+from cli.views.admin_view import AdminView
 
 
 class AdminController:

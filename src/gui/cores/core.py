@@ -1,13 +1,14 @@
 import importlib.util
 
-from cores.controller import Controller
-from cores.view import View
+from gui.cores.controller import Controller
+from gui.cores.view import View
+from models.student import Student
 
 
 class Core:
     current_view: View | None
     current_controller: Controller | None
-    user: None
+    user: Student | None
 
     def __init__(self, parent):
         self.root = parent
@@ -65,7 +66,9 @@ class Core:
         pass
 
     def __try_get_module(self, core: str, module_name: str):
-        module = self.__check_module_existent(f"{core.lower()}s.{module_name.lower()}")
+        module = self.__check_module_existent(
+            f"gui.{core.lower()}s.{module_name.lower()}"
+        )
         return getattr(module, f"{module_name.capitalize()}{core.capitalize()}")
 
     def __is_a_same_instance(self, controller_cls):
