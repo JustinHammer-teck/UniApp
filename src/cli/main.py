@@ -1,12 +1,11 @@
 import sys
 from os import name, system
 
+from cli.controllers import admin_controller as admin_ctrl
+from cli.controllers import student_controller as stu_ctrl
 from common.color import Color
 from models.admin import Admin
 from models.student import Student
-
-from cli.controllers import admin_controller as admin_ctrl
-from cli.controllers import student_controller as stu_ctrl
 
 
 class UniApp:
@@ -44,7 +43,7 @@ class UniApp:
 
     def admin_menu(self):
         while True:
-            userchoice = input("\033[36mAdmin System (c/g/p/r/s/x): \033[0m")
+            userchoice = input("\033[36m\tAdmin System (c/g/p/r/s/x): \033[0m")
 
             match userchoice.lower():
                 case "1" | "c":
@@ -63,7 +62,7 @@ class UniApp:
 
     def student_login(self):
         while True:
-            userchoice = input("\033[36mStudent System (l/r/x): \033[0m")
+            userchoice = input("\033[36m\tStudent System (l/r/x): \033[0m")
 
             match userchoice.lower():
                 case "1" | "l":
@@ -78,7 +77,7 @@ class UniApp:
             if type(self.session) is not Student:
                 break
 
-            userchoice = input("\033[36mStudent Course Menu (c/e/r/s/x) : \033[0m")
+            userchoice = input("\033[36m\t\tStudent Course Menu (c/e/r/s/x) : \033[0m")
 
             match userchoice.lower():
                 case "1" | "c":
