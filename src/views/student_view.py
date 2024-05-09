@@ -25,7 +25,7 @@ class StudentView:
             if username:  # Ensure the input is not empty or just whitespace
                 return username
             else:
-                print("Name cannot be empty. Please enter a valid name.")
+                Color.prRed("\tName cannot be empty. Please enter a valid name.")
 
     def get_confirm_password(self, newpassword):
         confirmnewpassword = input("\t\tConfirm Password: ")
@@ -43,8 +43,10 @@ class StudentView:
         return (newpassword, confirmnewpassword)
 
     def enrol_subject(self, student: Student, subject: Subject):
-        Color.prYellow(f"\t\tEnrolling in {subject.name}")
-        Color.prYellow(f"\t\tYou are now enrolled in {len(student.enrolment)} out of 4 subjects")  
+        Color.prYellow(f"\t\tEnrolling in Subject-{subject.name}")
+        Color.prYellow(
+            f"\t\tYou are now enrolled in {len(student.enrolment)} out of 4 subjects"
+        )
 
     def view_enrolment(self, student: Student):
         Color.prYellow(f"\t\tShowing {len(student.enrolment)} subjects")
