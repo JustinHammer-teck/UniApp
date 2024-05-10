@@ -1,6 +1,6 @@
 import tkinter as tk
 import tkinter.messagebox as tkmb
-from tkinter import NSEW, ttk
+from tkinter import ttk
 
 from gui.cores.core import Core
 from gui.cores.view import View
@@ -22,36 +22,29 @@ class HomeView(ttk.Frame, View):
         self.menu()
 
     def application(self):
-        tree = ttk.Treeview(
+        self.tree = ttk.Treeview(
             self,
             columns=("Subject ID", "Subject Name", "Mark", "Grade"),
             show="headings",
         )
 
-        tree.heading("Subject ID", text="Subject ID")
-        tree.heading("Subject Name", text="Subject Name")
-        tree.heading("Mark", text="Mark")
-        tree.heading("Grade", text="Grade")
+        self.tree.heading("Subject ID", text="Subject ID")
+        self.tree.heading("Subject Name", text="Subject Name")
+        self.tree.heading("Mark", text="Mark")
+        self.tree.heading("Grade", text="Grade")
 
         subjects = self.core.controller(
             "home", "get_subjects", student_id=self.core.user.id
         )
-
-        if not subjects:
-            tkmb.showerror(
-                title="Invalid Format",
-                message="Email and password cannot be empty",
-                icon="warning",
-            )
-        else:
+        if subjects:
             for subject in subjects:
-                tree.insert(
+                self.tree.insert(
                     "",
                     "end",
                     values=(subject.id, subject.name, subject.mark, subject.grade),
                 )
 
-        tree.pack(expand=True, fill="both")
+        self.tree.pack(expand=True, fill="both")
 
     def menu(self):
         tk.Button(
@@ -61,14 +54,29 @@ class HomeView(ttk.Frame, View):
                 "home", "enrol_subject", student_id=self.core.user.id
             ),
         ).pack(padx=15, pady=10)
-        tk.Button(self.layout.menu, text="Remove Subject").pack(padx=15, pady=10)
+        tk.Button(
+            self.layout.menu,
+            text="Remove Subject",
+            command=lambda: self.__delete_selected(),
+        ).pack(padx=15, pady=10)
         tk.Button(
             self.layout.menu,
             text="Log Out",
-            command=lambda: self.logout_confirm(),
+            command=lambda: self.__logout_confirm(),
         ).pack(padx=15, pady=10)
 
-    def logout_confirm(self):
+    def __delete_selected(self):
+        curItem = self.tree.focus()
+        if curItem:
+            subject_id = self.tree.item(curItem)["values"][0]
+            self.core.controller(
+                "home",
+                "remove_subject",
+                student_id=self.core.user.id,
+                subject_id=subject_id,
+            )
+
+    def __logout_confirm(self):
         answer = tkmb.askyesno(
             title="confirmation", message="Are you sure that you want to quit?"
         )

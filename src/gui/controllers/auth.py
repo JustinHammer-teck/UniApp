@@ -44,6 +44,7 @@ class AuthController(Controller):
                 message=f"User with {username} does not existed",
                 icon="warning",
             )
+            return
 
         self.core.is_auth = True
         self.core.user = selected_student[0]

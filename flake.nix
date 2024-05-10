@@ -11,7 +11,7 @@
     in {
       devShells.x86_64-darwin.default = pkgs.mkShell {
         nativeBuildInputs = with pkgs;
-          [ python312 virtualenv nodejs ] ++ (with pkgs.python312Packages; [
+          [ python312 virtualenv nodejs just ] ++ (with pkgs.python312Packages; [
             pip
             python312Packages.python-dotenv
             python312Packages.tkinter
