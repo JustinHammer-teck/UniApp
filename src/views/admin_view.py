@@ -44,7 +44,7 @@ class AdminView:
             if not pass_grades_info:
                 print("[]")
             else:
-                print(f"\t[{pass_grades_info}]")
+                print(f"[{pass_grades_info}]")
         else:
             print("\t\tFAIL --> []")
             print("\t\tPASS --> []")
