@@ -15,13 +15,16 @@
             pip
             python312Packages.python-dotenv
             python312Packages.tkinter
+            python312Packages.black
+            python312Packages.pre-commit-hooks
+            python312Packages.isort
           ]);
 
         shellHook = ''
-          echo "hello to python dev shell"
+          echo "Hello, welcome to python dev shell"
         '';
 
-        PYTHON_PATH = "${pkgs.python312}/bin/python3:./src";
+        PYTHON_PATH = "${pkgs.python312}/bin/python3";
       };
     };
 }

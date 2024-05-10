@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+
 from cli.main import UniApp
 from gui.main import GuiUniApp
 
