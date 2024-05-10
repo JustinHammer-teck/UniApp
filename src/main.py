@@ -29,14 +29,14 @@ class UniApp:
                 "\033[36mUniversity System: (A)dmin, (S)tudent, or X : \033[0m"
             )
 
-            match userchoice.lower():
-                case "1" | "a":
+            match userchoice:
+                case "a" | "A":
                     self.session = Admin()
                     break
-                case "2" | "s":
+                case "s" | "S":
                     self.session = self.student_login()
                     break
-                case "3" | "x":
+                case "x" | "X":
                     Color.prYellow("Thank You")
                     self.exit()
                     break
