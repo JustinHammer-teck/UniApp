@@ -39,7 +39,7 @@ class StudentController:
 
     def register(self):
         Color.prGreen("Student Sign Up")
-        
+
         while True:
             (email, password) = self.view.register_step1()
 
@@ -52,7 +52,9 @@ class StudentController:
                 else:
                     username = self.view.register_step2()
                     if username:  # Additional check to ensure `username` is not empty
-                        new_student: Student = Student.create_student(username, email, password)
+                        new_student: Student = Student.create_student(
+                            username, email, password
+                        )
                         self.db.context.append(new_student)
                         self.db.save()
                         Color.prYellow(f"Enrolling Student {new_student.name}")
@@ -61,7 +63,11 @@ class StudentController:
                 Color.prRed("Incorrect email or password format")
 
     def __get_existing_student(self, email: str) -> Student | None:
-        existing_students = [student for student in self.db.read() if student.email.lower() == email.lower()]
+        existing_students = [
+            student
+            for student in self.db.read()
+            if student.email.lower() == email.lower()
+        ]
         if existing_students:
             return existing_students[0]
         return None

@@ -44,7 +44,9 @@ class StudentView:
 
     def enrol_subject(self, student: Student, subject: Subject):
         Color.prYellow(f"Enrolling in {subject.name}")
-        Color.prYellow(f"You are now enrolled in {len(student.enrolment)} out of 4 subjects")  
+        Color.prYellow(
+            f"You are now enrolled in {len(student.enrolment)} out of 4 subjects"
+        )
 
     def view_enrolment(self, student: Student):
         Color.prYellow(f"Showing {len(student.enrolment)} subjects")
