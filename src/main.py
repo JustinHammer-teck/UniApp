@@ -29,21 +29,21 @@ class UniApp:
                 "\033[36mUniversity System: (A)dmin, (S)tudent, or X : \033[0m"
             )
 
-            match userchoice.lower():
-                case "1" | "a":
+            match userchoice:
+                case "a" | "A":
                     self.session = Admin()
                     break
-                case "2" | "s":
+                case "s" | "S":
                     self.session = self.student_login()
                     break
-                case "3" | "x":
+                case "x" | "X":
                     Color.prYellow("Thank You")
                     self.exit()
                     break
 
     def admin_menu(self):
         while True:
-            userchoice = input("\033[36mAdmin System (c/g/p/r/s/x): \033[0m")
+            userchoice = input("\033[36m\tAdmin System (c/g/p/r/s/x): \033[0m")
 
             match userchoice.lower():
                 case "1" | "c":
@@ -62,7 +62,7 @@ class UniApp:
 
     def student_login(self):
         while True:
-            userchoice = input("\033[36mStudent System (l/r/x): \033[0m")
+            userchoice = input("\033[36m\tStudent System (l/r/x): \033[0m")
 
             match userchoice.lower():
                 case "1" | "l":
@@ -77,7 +77,7 @@ class UniApp:
             if type(self.session) is not Student:
                 break
 
-            userchoice = input("\033[36mStudent Course Menu (c/e/r/s/x) : \033[0m")
+            userchoice = input("\033[36m\t\tStudent Course Menu (c/e/r/s/x) : \033[0m")
 
             match userchoice.lower():
                 case "1" | "c":

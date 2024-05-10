@@ -34,7 +34,7 @@ class Student:
             self.enrolment.append(subject)
             return True
 
-        Color.prRed("Student are allowed to enrol in 4 subjects only")
+        Color.prRed("\t\tStudent are allowed to enrol in 4 subjects only")
         return False
 
     def delete_subject(self, subject_id: str):
@@ -54,5 +54,3 @@ class Student:
         if len(self.enrolment) == 0:
             return -1
         return sum(subject.mark for subject in self.enrolment) / len(self.enrolment)
-        #     self.average_mark = 0
-        # self.average_mark = sum(subject.mark for subject in self.enrolment) / len(self.enrolment)
