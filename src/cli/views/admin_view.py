@@ -44,8 +44,8 @@ class AdminView:
             )
             print(f"\t[{pass_grades_info}]")
         else:
-            print("\t\tFAIL --> []")
-            print("\t\tPASS --> []")
+            print("\tFAIL --> []")
+            print("\tPASS --> []")
 
     def clear_database(self) -> bool:
         Color.prYellow("\tClearing students database")
