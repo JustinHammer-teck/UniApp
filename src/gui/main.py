@@ -1,5 +1,3 @@
-#!/bin/zsh
-
 import tkinter
 
 from gui.cores.core import Core

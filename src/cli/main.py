@@ -1,11 +1,12 @@
 import sys
 from os import name, system
 
-from cli.controllers import admin_controller as admin_ctrl
-from cli.controllers import student_controller as stu_ctrl
 from common.color import Color
 from models.admin import Admin
 from models.student import Student
+
+from cli.controllers import admin_controller as admin_ctrl
+from cli.controllers import student_controller as stu_ctrl
 
 
 class UniApp:
@@ -29,14 +30,14 @@ class UniApp:
                 "\033[36mUniversity System: (A)dmin, (S)tudent, or X : \033[0m"
             )
 
-            match userchoice.lower():
-                case "1" | "a":
+            match userchoice:
+                case "a" | "A":
                     self.session = Admin()
                     break
-                case "2" | "s":
+                case "s" | "S":
                     self.session = self.student_login()
                     break
-                case "3" | "x":
+                case "x" | "X":
                     Color.prYellow("Thank You")
                     self.exit()
                     break
@@ -107,3 +108,7 @@ class UniApp:
     @staticmethod
     def exit():
         sys.exit()
+
+
+if __name__ == "__main__":
+    UniApp().main()
