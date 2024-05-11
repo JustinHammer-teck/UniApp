@@ -41,15 +41,15 @@ class AdminView:
                     if grade != "Z"
                 ]
             )
-            print(f"[{pass_grades_info}]")
+            print(f"\t[{pass_grades_info}]")
         else:
-            print("\t\tFAIL --> []")
-            print("\t\tPASS --> []")
+            print("\tFAIL --> []")
+            print("\tPASS --> []")
 
     def clear_database(self) -> bool:
         Color.prYellow("\tClearing students database")
         user_choice = input(
-            "\033[91m \tAre You Sure To Delete All Student Data ? [Y] yes or [N] no: \033[00m"
+            "\t\033[91mAre you sure you want to clear the database (Y)ES/(N)O: \033[00m"
         )
 
         return True if user_choice.lower() == "y" else False

@@ -33,13 +33,11 @@ class StudentController:
                     return selected_student[0]
                 else:
                     Color.prRed("\tStudent does not exist")
-                    break
             else:
                 Color.prRed("\tIncorrect email or password format")
 
     def register(self):
         Color.prGreen("\tStudent Sign Up")
-        
         while True:
             (email, password) = self.view.register_step1()
 
@@ -48,11 +46,12 @@ class StudentController:
                 if self.__is_existed_user(email):
                     existing_student = self.__get_existing_student(email)
                     Color.prRed(f"\tStudent {existing_student.name} already exists")
-                    break
                 else:
                     username = self.view.register_step2()
                     if username:  # Additional check to ensure `username` is not empty
-                        new_student: Student = Student.create_student(username, email, password)
+                        new_student: Student = Student.create_student(
+                            username, email, password
+                        )
                         self.db.context.append(new_student)
                         self.db.save()
                         Color.prYellow(f"\tEnrolling Student {new_student.name}")
@@ -61,7 +60,11 @@ class StudentController:
                 Color.prRed("\tIncorrect email or password format")
 
     def __get_existing_student(self, email: str) -> Student | None:
-        existing_students = [student for student in self.db.read() if student.email.lower() == email.lower()]
+        existing_students = [
+            student
+            for student in self.db.read()
+            if student.email.lower() == email.lower()
+        ]
         if existing_students:
             return existing_students[0]
         return None
