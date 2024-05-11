@@ -34,7 +34,7 @@ class UniApp:
                     self.session = Admin()
                     break
                 case "s" | "S":
-                    self.session = self.student_login()
+                    self.student_login()
                     break
                 case "x" | "X":
                     Color.prYellow("Thank You")
@@ -66,7 +66,10 @@ class UniApp:
 
             match userchoice.lower():
                 case "1" | "l":
-                    return stu_ctrl.StudentController().login()
+                    student = stu_ctrl.StudentController().login()
+                    if student:
+                        self.session = student
+                        break
                 case "2" | "r":
                     stu_ctrl.StudentController().register()
                 case "3" | "x":
