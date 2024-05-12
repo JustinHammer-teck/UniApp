@@ -33,4 +33,17 @@ If you're not using Nix it is recommended to:
 ```sh
 pip install -r requirement.txt
 ```
-## My Change Here
+
+## How to run 
+```sh
+chmod +x ./src/main.py
+
+
+## Run CLI application
+./src/main.py
+
+## Run GUI application
+./src/main.py -g
+./src/main.py --gui
+
+```

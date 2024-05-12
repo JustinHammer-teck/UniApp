@@ -19,7 +19,7 @@ class Database(metaclass=SingletonMeta):
 
     def read(self) -> List[Student]:
         try:
-            if self.__file_exited():
+            if self.__file_existed():
                 with open(self.DB_PATH, "rb") as file:
                     if file.read(1):
                         file.seek(0)
@@ -42,7 +42,7 @@ class Database(metaclass=SingletonMeta):
             self.__load()
 
     def clear(self):
-        if self.__file_exited():
+        if self.__file_existed():
             try:
                 with open(self.DB_PATH, "w") as file:
                     pass
@@ -51,8 +51,8 @@ class Database(metaclass=SingletonMeta):
             except Exception as e:
                 raise e
 
-    def __file_exited(self) -> bool:
+    def __file_existed(self) -> bool:
         if not os.path.exists(self.DB_PATH):
-            print(f"file with {self.DB_PATH} does not exited")
+            # print(f"file with {self.DB_PATH} does not exited")
             return False
         return True
