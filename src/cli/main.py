@@ -66,14 +66,14 @@ class UniApp:
             userchoice = input("\033[36m\tStudent System (l/r/x): \033[0m")
 
             match userchoice.lower():
-                case "L" | "l":
+                case "l":
                     student = stu_ctrl.StudentController().login()
                     if student:
                         self.session = student
                         break
-                case "R" | "r":
+                case "r":
                     stu_ctrl.StudentController().register()
-                case "X" | "x":
+                case "x":
                     break
 
     def student_menu(self):
