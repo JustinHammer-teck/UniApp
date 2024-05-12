@@ -54,9 +54,6 @@ class StudentController:
                         new_student: Student = Student.create_student(
                             username, email, password
                         )
-                        new_student: Student = Student.create_student(
-                            username, email, password
-                        )
                         self.db.context.append(new_student)
                         self.db.save()
                         Color.prYellow(f"\tEnrolling Student {new_student.name}")
