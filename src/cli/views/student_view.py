@@ -41,7 +41,7 @@ class StudentView:
         return (newpassword, confirmnewpassword)
 
     def enrol_subject(self, student: Student, subject: Subject):
-        Color.prYellow(f"\t\tEnrolling in Subject-{subject.name}")
+        Color.prYellow(f"\t\tEnrolling in {subject.name}")
         Color.prYellow(
             f"\t\tYou are now enrolled in {len(student.enrolment)} out of 4 subjects"
         )
