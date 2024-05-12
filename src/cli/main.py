@@ -84,15 +84,15 @@ class UniApp:
             userchoice = input("\033[36m\t\tStudent Course Menu (c/e/r/s/x) : \033[0m")
 
             match userchoice.lower():
-                case "1" | "c":
+                case "c":
                     stu_ctrl.StudentController().change_password(self.session)
-                case "2" | "e":
+                case "e":
                     stu_ctrl.StudentController().enrol_subject(self.session)
-                case "3" | "r":
+                case "r":
                     stu_ctrl.StudentController().remove_subject(self.session)
-                case "4" | "s":
+                case "s":
                     stu_ctrl.StudentController().view_enrolment(self.session)
-                case "5" | "x":
+                case "x":
                     self.__logout()
                     break
 
