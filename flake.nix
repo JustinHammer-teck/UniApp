@@ -11,14 +11,17 @@
     in {
       devShells.x86_64-darwin.default = pkgs.mkShell {
         nativeBuildInputs = with pkgs;
-          [ python312 virtualenv nodejs ] ++ (with pkgs.python312Packages; [
+          [ python312 virtualenv nodejs just ] ++ (with pkgs.python312Packages; [
             pip
             python312Packages.python-dotenv
             python312Packages.tkinter
+            python312Packages.black
+            python312Packages.pre-commit-hooks
+            python312Packages.isort
           ]);
 
         shellHook = ''
-          echo "hello to python dev shell"
+          echo "Hello, welcome to python dev shell"
         '';
 
         PYTHON_PATH = "${pkgs.python312}/bin/python3";

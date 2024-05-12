@@ -34,7 +34,7 @@ class Student:
             self.enrolment.append(subject)
             return True
 
-        Color.prRed("\t\tStudent are allowed to enrol in 4 subjects only")
+        Color.prRed("\t\tStudents are allowed to enrol in 4 subjects only")
         return False
 
     def delete_subject(self, subject_id: str):

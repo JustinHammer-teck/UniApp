@@ -6,7 +6,7 @@ from common.color import Color
 from persistent import db
 from models.student import Student
 from models.subject import Subject
-from views import student_view as studentv
+from cli.views import student_view as studentv
 
 
 class StudentController:

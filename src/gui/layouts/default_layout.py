@@ -3,8 +3,10 @@ import tkinter as tk
 
 class DefaultLayout:
     def __init__(self, root):
-        self.label = tk.Label(master=root, anchor="center", text="GuiUniAPP")
-        self.application = tk.Frame(master=root, width=650 // 4, height=400)
+        self.label = tk.Label(master=root, anchor="center", text="GUIUNIAPP")
+        self.application = tk.Frame(
+            master=root, width=650 // 4, height=400, bg="#135D66"
+        )
         self.menu = tk.Frame(master=root, width=650 // 8, height=400)
 
     def main(self):

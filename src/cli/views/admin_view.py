@@ -1,4 +1,5 @@
 from typing import List
+
 from common.color import Color
 from models.student import Student
 

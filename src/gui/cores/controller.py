@@ -1,6 +1,6 @@
 import abc
 
-from cores.view import View
+from gui.cores.view import View
 
 
 class Controller(metaclass=abc.ABCMeta):
