@@ -67,6 +67,11 @@ class StudentController:
             for student in self.db.read()
             if student.email.lower() == email.lower()
         ]
+        existing_students = [
+            student
+            for student in self.db.read()
+            if student.email.lower() == email.lower()
+        ]
         if existing_students:
             return existing_students[0]
         return None

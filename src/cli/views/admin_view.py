@@ -37,12 +37,15 @@ class AdminView:
             print("\tPASS", end=" --> ")
             pass_grades_info = ", ".join(
                 [
-                    f"{', '.join(students)}"
-                    for grade, students in grades_dict.items()
+                    f"{', '.join(student_info)}"
+                    for grade, student_info in grades_dict.items()
                     if grade != "Z"
                 ]
             )
-            print(f"\t[{pass_grades_info}]")
+            if not pass_grades_info:
+                print("[]")
+            else:
+                print(f"[{pass_grades_info}]")
         else:
             print("\tFAIL --> []")
             print("\tPASS --> []")

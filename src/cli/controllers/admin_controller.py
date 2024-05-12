@@ -48,7 +48,21 @@ class AdminController:
     def __form_grade_groups(self, students):
         grade_groups = {}
         for student in students:
-            for subject in student.enrolment:
-                info = f"{student.name} :: {student.id} --> GRADE:  {subject.grade} - MARK: {subject.mark}"
-                self.__add_grade_groups(subject.grade, info, grade_groups)
+            if student.average_score() == -1:
+                continue
+            average_grade = self.letter_marks(student.average_score())
+            info = f"{student.name} :: {student.id} --> GRADE:  {average_grade} - MARK: {student.average_score()}"
+            self.__add_grade_groups(average_grade, info, grade_groups)
         return grade_groups
+
+    def letter_marks(self, mark: int):
+        if mark < 50:
+            return "Z"
+        elif 50 <= mark < 65:
+            return "P"
+        elif 65 <= mark < 75:
+            return "C"
+        elif 75 <= mark < 85:
+            return "D"
+        elif mark >= 85:
+            return "HD"
