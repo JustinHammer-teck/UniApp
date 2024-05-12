@@ -1,5 +1,3 @@
-from getpass import getpass
-
 from common.color import Color
 from models.student import Student
 from models.subject import Subject
