@@ -32,7 +32,7 @@ class UniApp:
 
             match userchoice:
                 case "a" | "A":
-                    self.admin_menu()
+                    self.session = Admin()
                     break
                 case "s" | "S":
                     self.student_login()
