@@ -47,17 +47,17 @@ class UniApp:
             userchoice = input("\033[36m\tAdmin System (c/g/p/r/s/x): \033[0m")
 
             match userchoice.lower():
-                case "1" | "c":
+                case "c":
                     admin_ctrl.AdminController().clear_database()
-                case "2" | "g":
+                case "g":
                     admin_ctrl.AdminController().view_by_grade()
-                case "3" | "p":
+                case "p":
                     admin_ctrl.AdminController().view_by_passfail()
-                case "4" | "r":
+                case "r":
                     admin_ctrl.AdminController().remove_student()
-                case "5" | "s":
+                case "s":
                     admin_ctrl.AdminController().view_students()
-                case "6" | "x":
+                case "x":
                     self.__logout()
                     break
 
@@ -66,14 +66,14 @@ class UniApp:
             userchoice = input("\033[36m\tStudent System (l/r/x): \033[0m")
 
             match userchoice.lower():
-                case "1" | "l":
+                case "l":
                     student = stu_ctrl.StudentController().login()
                     if student:
                         self.session = student
                         break
-                case "2" | "r":
+                case "r":
                     stu_ctrl.StudentController().register()
-                case "3" | "x":
+                case "x":
                     break
 
     def student_menu(self):
@@ -84,15 +84,15 @@ class UniApp:
             userchoice = input("\033[36m\t\tStudent Course Menu (c/e/r/s/x) : \033[0m")
 
             match userchoice.lower():
-                case "1" | "c":
+                case "c":
                     stu_ctrl.StudentController().change_password(self.session)
-                case "2" | "e":
+                case "e":
                     stu_ctrl.StudentController().enrol_subject(self.session)
-                case "3" | "r":
+                case "r":
                     stu_ctrl.StudentController().remove_subject(self.session)
-                case "4" | "s":
+                case "s":
                     stu_ctrl.StudentController().view_enrolment(self.session)
-                case "5" | "x":
+                case "x":
                     self.__logout()
                     break
 
