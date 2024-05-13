@@ -53,4 +53,5 @@ class Student:
     def average_score(self) -> float:
         if len(self.enrolment) == 0:
             return -1
-        return sum(subject.mark for subject in self.enrolment) / len(self.enrolment)
+        average_mark = sum(subject.mark for subject in self.enrolment) / len(self.enrolment)
+        return round(average_mark, 2)
